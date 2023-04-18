@@ -1,6 +1,6 @@
 program Ejercicio3;
-procedure suma(num1: integer; var num2:integer);
-    begin
+procedure suma(num1: integer; num2:integer);   
+begin
         num2 := num1 + num2;
         num1 := 0;
     end;
@@ -14,15 +14,5 @@ begin
 end.
 
 {
-1,10
--0,11
-2,11
-13
-3,13
-16
-4,16
-20
-5,20
-25
-Si se ingresa 10 el programa imprime 25
+EL programa imprime 10
 }

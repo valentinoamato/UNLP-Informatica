@@ -74,6 +74,26 @@ begin
 
 end;
 
+procedure eliminarv2(var pri:lista;num:integer);
+var
+    actual,anterior:lista;
+begin
+    actual:=pri;
+    anterior:=nil;
+    while (actual<>nil) and (actual^.num<>num) do
+        begin
+            anterior:=actual;
+            actual:=actual^.sig;
+        end;
+    if (anterior<>nil) then
+        anterior^.sig:=actual^.sig
+    else
+        if (pri<>nil) then
+            pri:=pri^.sig;
+    dispose(actual);
+end;
+
+
 var
     pri:lista;
     ult:lista;
@@ -88,6 +108,6 @@ begin
             recorrer(pri);
             read(num);
             write('gola');
-            eliminar(pri,num);
+            eliminarv2(pri,num);
         end;
 end.

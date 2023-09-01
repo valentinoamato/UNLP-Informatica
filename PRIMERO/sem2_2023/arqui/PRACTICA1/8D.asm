@@ -3,7 +3,7 @@
 ;Ejemplo: CONTAR_VOC de ‘contar1#!’ debe retornar 2
 
 ORG 1000H
-string   DB  "abnumE874III",00H
+string   DB  "abnumE874III..//oa3",00H
 VOCALES DB "aeiouAEIOU", 00h
 
 ORG 2000H

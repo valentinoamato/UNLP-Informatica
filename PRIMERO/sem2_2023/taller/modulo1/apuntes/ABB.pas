@@ -61,8 +61,6 @@ end;
     
 function Busqueda(a:arbol;x:integer):arbol;
 begin
-    if (a<>nil) then
-        write(a^.dato);
     if (a=nil) then
         Busqueda:=nil
     else if (a^.dato=x) then
@@ -72,10 +70,23 @@ begin
     else
         Busqueda:=Busqueda(a^.HD,x);
 end;
+function ContarEntreDosValores(a:arbol;n,m:integer):integer;
+begin
+    if (a=nil) then
+        ContarEntreDosValores:=0
+    else if (a^.dato>n) and (a^.dato<m) then
+        begin
+            ContarEntreDosValores:= 1+ContarEntreDosValores(a^.HI,n,m) + ContarEntreDosValores(a^.HD,n,m);
+        end
+    else if (a^.dato>m) then
+        ContarEntreDosValores:=ContarEntreDosValores(a^.HI,n,m)
+    else 
+        ContarEntreDosValores:=ContarEntreDosValores(a^.HD,n,m);
+end;
 
 var
     a,arbolmin,arbolbusqueda:arbol;
-    x:integer;
+    x,n,m:integer;
 
 begin
     a:=nil;
@@ -89,4 +100,10 @@ begin
     arbolbusqueda:=Busqueda(a,x);
     if (arbolbusqueda<>nil)then
         writeln('El nodo buscado existe: ',arbolbusqueda^.dato);
+    
+    writeln('Ingrese n: ');
+    read(n);
+    writeln('Ingrese m: ');
+    read(m);
+    writeln('La cantidad de nodos entre ',n,' y ',m,' es ',ContarEntreDosValores(a,n,m));
 end.

@@ -11,15 +11,14 @@ type
 
 
 procedure agregar(var a:arbol;dato:integer);
-var
-    aux:arbol;
 begin
-    new(aux);
-    aux^.HI:=nil;
-    aux^.HD:=nil;
-    aux^.dato:=dato;
     if (a=nil) then
-        a:=aux
+        begin
+            new(a);
+            a^.HI:=nil;
+            a^.HD:=nil;
+            a^.dato:=dato;
+        end
     else if (dato<=a^.dato) then
         agregar(a^.HI,dato)
     else
@@ -70,6 +69,7 @@ begin
     else
         Busqueda:=Busqueda(a^.HD,x);
 end;
+
 function ContarEntreDosValores(a:arbol;n,m:integer):integer;
 begin
     if (a=nil) then
@@ -78,7 +78,7 @@ begin
         begin
             ContarEntreDosValores:= 1+ContarEntreDosValores(a^.HI,n,m) + ContarEntreDosValores(a^.HD,n,m);
         end
-    else if (a^.dato>m) then
+    else if (a^.dato>=m) then
         ContarEntreDosValores:=ContarEntreDosValores(a^.HI,n,m)
     else 
         ContarEntreDosValores:=ContarEntreDosValores(a^.HD,n,m);

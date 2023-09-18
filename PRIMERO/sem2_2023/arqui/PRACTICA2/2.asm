@@ -8,9 +8,9 @@ ORG 2000H
 MOV BX, OFFSET char
 MOV AL, 1
 bucle:INT 7
-cmp byte ptr [bx],0ffh
-js terminar
-inc byte ptr [bx]
+cmp char,0ffh
+jz terminar
+inc char
 jmp bucle
 
 terminar:INT 0

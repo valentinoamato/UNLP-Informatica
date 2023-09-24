@@ -1,0 +1,70 @@
+;d) Escribir un programa que solicite el ingreso de cinco caracteres por teclado y los almacene en memoria.
+;Una vez ingresados, que los envíe a la impresora a través del HAND-SHAKE, en primer lugar tal cual
+;fueron ingresados y a continuación en sentido inverso. Utilizar el HAND-SHAKE en modo consulta de
+;estado. ¿Qué diferencias encuentra con el ejercicio 2c?
+DATO EQU 40H
+ESTADO EQU 41H
+
+ORG 1000H
+STR DB "INGRESE UN NUMERO:"
+FIN DB ?
+
+ORG 1500H
+STR2 DB ?
+
+ORG 2000H
+;CONFIGURACION ESTADO
+IN AL,ESTADO
+AND AL,01111111B; I->0
+OUT ESTADO,AL
+;CANTIDAD DE CARACTERES A INGRESAR
+MOV CX, 0
+;MAIN LOOP
+INPUT:
+;MENSAJE A MOSTRAR
+MOV BX, OFFSET STR
+MOV AL, OFFSET FIN-OFFSET STR
+;IMPRIMIR  MENSAJE
+INT 7
+;INGRESO DE NUMERO
+MOV BX,OFFSET STR2
+ADD BX,CX
+INT 6
+;AUMENTO BX REDUZCO CL
+INC CX
+CMP CX,5
+JNZ INPUT
+
+;IMPRESION NORMAL
+MOV BX,OFFSET STR2
+LOOP:
+IN AL,ESTADO
+AND AL,1;GUARDO EN AL BUSY
+JNZ LOOP;SI B=1
+;IMPRESION DEL CARACTER
+MOV AL,[BX]
+OUT DATO,AL
+;CX BX
+INC BX
+DEC CL
+JNZ LOOP
+
+;IMPRESION INVERSA
+DEC BX;APUNTO BX AL ULTIMO CARACTER DE STR2
+LOOP2:
+IN AL,ESTADO
+AND AL,1;GUARDO EN AL BUSY
+JNZ LOOP2;SI B=1
+;IMPRESION DEL CARACTER
+MOV AL,[BX]
+OUT DATO,AL
+;CX BX
+DEC BX
+INC CL
+CMP CL,5
+JNZ LOOP2
+
+INT 0
+END
+
+;d) Ya no es necesario enviar la se;al de strobe

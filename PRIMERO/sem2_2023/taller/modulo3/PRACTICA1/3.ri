@@ -1,0 +1,96 @@
+
+programa Ejercicio1b
+procesos
+  proceso juntarPapeles(ES papeles: numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papeles:=papeles + 1
+  fin
+  proceso juntarFlores(ES flor: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina 
+      tomarFlor
+      flor:=flor + 1
+  fin
+  proceso depositarFlores(E cantFlores:numero)
+  comenzar
+    repetir cantFlores
+      depositarFlor
+  fin
+  proceso depositarPapeles(E cantPapeles:numero)
+  comenzar
+    repetir cantPapeles
+      depositarPapel
+  fin
+  proceso invertir
+  comenzar
+    repetir 2
+      derecha
+  fin
+  proceso escalon(E N:numero ; ES MayorP:boolean ;E ultimoEscalon:boolean)
+  variables
+    papel:numero
+    flor:numero
+    cantTotalPapeles:numero
+    cantTotalFlores:numero
+  comenzar
+    cantTotalPapeles:=0
+    cantTotalFlores:=0
+    repetir 2
+      repetir N
+        flor:=0
+        papel:=0
+        juntarPapeles(papel)
+        juntarFlores(flor)
+        depositarPapeles(papel)
+        depositarFlores(flor)
+        cantTotalPapeles:=cantTotalPapeles+papel
+        cantTotalFlores:=cantTotalFlores+flor
+        mover
+      derecha    
+    invertir
+    si ultimoEscalon
+      juntarPapeles(papel)
+      juntarFlores(flor)
+      depositarPapeles(papel)
+      depositarFlores(flor)  
+    MayorP:=((papel+1)=flor)      
+  fin
+    
+areas
+  areaR1: AreaC(1,1,100,100)    {MODIFICACION} 
+robots 
+  robot tipo1
+  variables
+    N:numero
+    contador:numero
+    mayor:boolean
+    ultimoEscalon:boolean
+    
+  comenzar
+    N:=0
+    contador:=0
+    repetir 4
+      mayor:=F
+      N:=N+1
+      ultimoEscalon:=(N=4)
+      escalon(N,mayor,ultimoEscalon)
+      si mayor
+        contador:=contador+1 
+    Informar(contador)    
+          
+  fin  
+variables
+  r1: tipo1                 {MODIFICACION}
+  r2: tipo1
+  r3: tipo1
+  
+comenzar
+  AsignarArea(r1,areaR1)    {Primero se hacen todos los AsignarArea, luego los Iniciar}
+  AsignarArea(r2,areaR1)
+  AsignarArea(r3,areaR1) 
+  Iniciar(r1,12,14)
+  Iniciar(r2,17,10)
+  Iniciar(r3,22,6)
+fin

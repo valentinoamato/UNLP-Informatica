@@ -1,0 +1,81 @@
+programa E4
+procesos
+  proceso juntarFlores
+  comenzar
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+  fin
+  proceso juntarPapeles
+  comenzar
+    mientras (HayPapelEnLaEsquinaEnLaEsquina)
+      tomarPapel
+  fin
+
+  proceso LimpiarAvenida(E Flores:boolean)
+  comenzar
+    repetir 99
+      si (Flores)
+        juntarFlores
+      sino
+        juntarPapeles
+      mover
+    si (Flores)
+      juntarFlores
+    sino
+      juntarPapeles 
+  fin
+
+
+  proceso Limpiar(E Flores:boolean){Junta papeles por defecto}
+  variables
+    Av:numero
+    Ca:numero
+  comenzar
+    Av:=PosAv
+    Ca:=PosCa
+    repetir 24
+      LimpiarAvenida(Flores)
+      Av:=Av+1
+      Pos(Av,Ca)   
+    LimpiarAvenida(Flores)
+  fin
+
+
+areas 
+  AreaR1: AreaP(1,1,25,100)
+  AreaR2: AreaP(26,1,50,100)
+  AreaR3: AreaP(51,1,75,100)
+  AreaR4: AreaP(76,1,100,100)
+
+robots
+  robot tipo1
+
+  comenzar
+    si (((PosAv/2)*2)=PosAv)
+      Limpiar(F)
+    sino
+      Limpiar(V)
+  fin
+
+variables
+  r1: tipo1
+  r2: tipo1
+  r3: tipo1
+  r4: tipo1
+
+comenzar
+  AsignarArea(r1,AreaR1)
+  AsignarArea(r2,AreaR2)
+  AsignarArea(r3,AreaR3)
+  AsignarArea(r4,AreaR4)
+  Iniciar(r1,1,1)
+  Iniciar(r2,26,1)
+  Iniciar(r3,51,1)
+  Iniciar(r4,76,1)
+fin
+{
+  A) Si ahora quisiera que la ciudad se divida en 20 areas seberia modificar lo siguiente:
+    1-Agregar robots
+    2-Agregar areas
+    3-Modificar el repetir del proceso Limpiar (repetir 24 -> repetir 4)
+}

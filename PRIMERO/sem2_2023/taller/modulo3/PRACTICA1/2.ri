@@ -1,0 +1,55 @@
+programa dos 
+procesos
+  proceso juntarPapeles(ES cant:numero)
+  comenzar
+    mientras (HayPapelEnLaEsquina)
+      tomarPapel
+      cant:=cant+1
+  fin
+areas
+  AreaR1 : AreaP(10,10,10,29)
+  AreaR2 : AreaP(10,30,29,30)
+  AreaR3 : AreaP(30,11,30,30)
+  AreaR4 : AreaP(11,10,30,10)
+robots
+  robot tipo1
+  variables
+    cantPapeles:numero
+  comenzar
+    si (PosCa=30)
+      si (PosAv=10)
+        derecha
+      sino
+        repetir 2 
+          derecha
+    sino
+      si ((PosCa=10)&(PosAv=30))
+        repetir 3
+          derecha
+    cantPapeles:=0
+    repetir 19
+      juntarPapeles(cantPapeles)
+      mover
+    juntarPapeles(cantPapeles)
+    Informar(cantPapeles)
+  fin
+variables
+  r1: tipo1
+  r2: tipo1
+  r3: tipo1
+  r4: tipo1
+comenzar
+  AsignarArea(r1,AreaR1)
+  AsignarArea(r2,AreaR2)
+  AsignarArea(r3,AreaR3)
+  AsignarArea(r4,AreaR4)
+  Iniciar(r1,10,10)
+  Iniciar(r2,10,30)
+  Iniciar(r3,30,30)
+  Iniciar(r4,30,10)
+fin
+{
+  A) Deben declararse un area privada para el recorrido de cada robot
+  B)No, ya que cada robot se mueve en su propia area privada
+}
+

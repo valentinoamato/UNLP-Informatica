@@ -1,0 +1,172 @@
+programa cinco
+procesos
+  proceso juntarFlores(ES flores:numero)
+  comenzar
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      flores:=flores+1
+  fin
+
+  proceso juntarPapeles(ES papeles:numero)
+  comenzar
+    mientras (HayPapelEnLaEsquina)
+      tomarPapel
+      papeles:=papeles+1
+  fin
+  
+  proceso depositarFlores(E flores:numero)
+  comenzar 
+    repetir flores
+      depositarFlor
+  fin
+
+  proceso depositarPapeles(E papeles:numero)
+  comenzar 
+    repetir papeles
+      depositarPapel
+  fin
+
+  proceso QuienSoy(ES Nrobot:numero) {retorna el numero del robot segun su pos}
+  variables
+    Nrobot:numero
+    Av:numero
+  comenzar
+    Av:=PosAv
+    si (Av>50)
+      si (Av>73)
+        Nrobot:=2
+      sino
+        Nrobot:=3
+    sino
+      si (Av>5)
+        Nrobot:=4
+      sino
+        Nrobot:=1
+  fin
+
+  proceso SoyPar(E Nrobot:numero;ES Par:boolean) {retorna si el numero del robot es par}
+  comenzar
+    Par:=(((Nrobot/2)*2)=Nrobot)
+  fin
+
+  proceso orientar(E Par:boolean) {orienta el robot segun su numero}
+  comenzar
+    si (~Par)
+      derecha
+  fin
+
+  proceso juntarElementos(E Par:boolean;ES elementos:numero) {junta flores o papeles segun si el numero de robot es par o impar}
+  comenzar 
+    si (Par)
+      juntarPapeles(elementos)
+    sino
+      juntarFlores(elementos)
+  fin
+
+  proceso CantEsquinas(E Nrobot:numero;ES esquinas:numero){retorna la cantidad de esquinas a recorres segun Nrobot}
+  comenzar
+    si (Nrobot>2)
+      si (Nrobot>3)
+        esquinas:=10
+      sino
+        esquinas:=30
+    sino
+      si (Nrobot>1)
+        esquinas:=20
+      sino
+        esquinas:=15
+  fin
+
+  proceso depositarElementos(E Par:boolean;E elementos:numero) {deposita flores o papeles segun si el numero de robot es par o impar}
+  comenzar 
+    si (Par)
+      depositarPapeles(elementos)
+    sino
+      depositarFlores(elementos)
+  fin
+
+  proceso recorrer(E Par:boolean;E esquinas:numero) {recorre una calle o avenida como corresponda}
+  variables
+    elementos:numero
+  comenzar
+    elementos:=0
+    repetir (esquinas-1)
+      juntarElementos(Par,elementos)
+      mover
+    juntarElementos(Par,elementos)
+    si (Par)
+      Pos(PosAv,(PosCa-(esquinas-1)))
+    depositarElementos(Par,elementos)
+  fin
+
+  proceso Reposicionar (E Par:boolean;E Avenida:numero;E Calle:numero) {Reposiciona al robot para iniciar el segundo y ultimo recorrido}
+  comenzar 
+    si (Par)
+      Avenida:=Avenida+5
+    sino
+      Calle:=Calle+5
+    Pos(Avenida,Calle)
+  fin
+
+  proceso Trabajo(E Nrobot:numero)
+  variables
+    esquinas:numero
+    Par:boolean
+    CalleInicial:numero
+    AvenidaInicial:numero
+  comenzar
+    SoyPar(Nrobot,Par)
+    esquinas:=0
+    CalleInicial:=PosCa
+    AvenidaInicial:=PosAv
+    CantEsquinas(Nrobot,esquinas)
+    {Primer recorrido}
+    orientar(Par)
+    recorrer(Par,esquinas)
+    {Segundo recorrido}
+    Reposicionar(Par,AvenidaInicial,CalleInicial)
+    recorrer(Par,esquinas)
+  fin
+
+areas
+  AreaR1A: AreaP(1,80,15,80)
+  AreaR1B: AreaP(1,75,15,75)
+
+  AreaR2A: AreaP(75,81,75,100)
+  AreaR2B: AreaP(80,81,80,100)
+
+  AreaR3A: AreaP(71,15,100,15)
+  AreaR3B: AreaP(71,10,100,10)
+
+  AreaR4A: AreaP(10,1,10,10)
+  AreaR4B: AreaP(15,1,15,10)
+
+robots
+  robot tipo1
+  variables
+    Nrobot:numero
+  comenzar
+    Nrobot:=0
+    QuienSoy(Nrobot)
+    Trabajo(Nrobot)
+  fin
+variables
+  r1:tipo1
+  r2:tipo1
+  r3:tipo1
+  r4:tipo1
+comenzar
+  AsignarArea(r1,AreaR1A)
+  AsignarArea(r1,AreaR1B)
+  AsignarArea(r2,AreaR2A)
+  AsignarArea(r2,AreaR2B)
+  AsignarArea(r3,AreaR3A)
+  AsignarArea(r3,AreaR3B)
+  AsignarArea(r4,AreaR4A)
+  AsignarArea(r4,AreaR4B)
+
+  Iniciar(r1,1,75)
+  Iniciar(r2,75,81)
+  Iniciar(r3,71,10)
+  Iniciar(r4,10,1)
+fin

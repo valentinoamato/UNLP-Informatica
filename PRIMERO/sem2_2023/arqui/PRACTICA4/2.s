@@ -28,6 +28,6 @@ halt
 #B)
 #Ya no hay atascos  porque ld r2, B(r0) le adelanta el valor de r2 a la proxima operacion durante la etapa MEM
 #
-#El color gris indica que esta en proceso dee ser escrito. Si hay otro color, indica que esta disponible para hacer forwarding en la etapa del color mostrado
+#El color gris indica que esta en proceso de ser escrito. Si hay otro color, indica que esta disponible para hacer forwarding en la etapa del color mostrado
 #
 #El CPI es de 1.8

@@ -1,0 +1,91 @@
+programa ejercicio2
+procesos
+  proceso izquierda
+  comenzar
+    repetir 3
+      derecha
+  fin
+  proceso juntarFlores(ES flores:numero)
+  comenzar
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      flores:=flores+1
+  fin
+
+  proceso juntarPapeles(ES papeles:numero)
+  comenzar
+    mientras (HayPapelEnLaEsquina)
+      tomarPapel
+      papeles:=papeles+1
+  fin
+
+  proceso juntarTodo(ES flores:numero; ES papeles:numero)
+  comenzar 
+    juntarFlores(flores)
+    juntarPapeles(papeles)
+  fin
+
+  proceso escalon(ES condicion:boolean)
+  variables
+    alto:numero
+    flores:numero
+    papeles:numero
+  comenzar
+    Random(alto,1,5)
+    repetir alto
+      juntarTodo(flores,papeles)
+      mover
+    juntarTodo(flores,papeles)
+    derecha
+    mover
+    izquierda
+    condicion:=(flores>papeles)
+  fin
+areas
+  Arear1 : AreaP(2,1,6,21)
+  Arear2 : AreaP(7,1,11,21)
+  Arear3 : AreaP(12,1,16,21)
+  Arear4  : AreaP(1,1,1,1)
+
+robots
+  robot peon
+  variables
+    cant:numero
+    cumple:boolean
+  comenzar 
+    cant:=0
+    repetir 4
+      escalon(cumple)
+      si (cumple)
+        cant:=cant+1
+    EnviarMensaje(cant,r4)
+  fin
+
+  robot jefe
+  variables
+    total:numero
+    cant:numero
+  comenzar
+    total:=0
+    repetir 3
+      RecibirMensaje(cant,*)
+      total:=total+cant
+    Informar('La_cantidad_de_escalones_con_mas_flores_que_papeles_es',total)
+  fin
+
+variables
+  r1 : peon
+  r2 : peon
+  r3 : peon
+  r4 : jefe
+comenzar 
+  AsignarArea(r1,Arear1)
+  AsignarArea(r2,Arear2)
+  AsignarArea(r3,Arear3)
+  AsignarArea(r4,Arear4)
+  Iniciar(r1,2,1)
+  Iniciar(r2,7,1)
+  Iniciar(r3,12,1)
+  Iniciar(r4,1,1)
+fin
+

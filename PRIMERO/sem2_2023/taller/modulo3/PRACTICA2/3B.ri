@@ -1,0 +1,121 @@
+programa ejercicio3
+procesos
+  proceso juntarFlores(ES flores:numero)
+  comenzar 
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+
+  proceso juntarPapeles(ES papeles:numero)
+  comenzar 
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papeles:=papeles+1
+  fin
+
+areas
+  AreaA1A :AreaP(1,1,10,1)
+  AreaA2A :AreaP(11,1,20,1)
+  AreaB1A :AreaP(1,5,10,5)
+  AreaB2A :AreaP(11,5,20,5)
+
+  AreaA1B :AreaP(21,1,30,1)
+  AreaA2B :AreaP(31,1,40,1)
+  AreaB1B :AreaP(21,5,30,5)
+  AreaB2B :AreaP(31,5,40,5)
+robots
+  robot A
+  variables
+    QuienSoy:numero
+    papeles:numero
+    i:numero
+  comenzar 
+    papeles:=0
+    i:=1
+    si (PosAv>5)
+      QuienSoy:=2
+    sino
+      QuienSoy:=1
+    derecha
+    repetir 2
+      si ((i=2)&(QuienSoy=1))
+        RecibirMensaje(papeles,a2)
+
+      si (QuienSoy=2)
+        RecibirMensaje(papeles,a1)
+      repetir 9
+        juntarPapeles(papeles)
+        mover
+      juntarPapeles(papeles)
+      si (QuienSoy=1)
+        EnviarMensaje(papeles,a2)
+      si (i=1)
+        Pos((PosAv+11),PosCa)
+
+      si ((i=1)&(QuienSoy=2))
+        EnviarMensaje(papeles,a1)
+
+      i:=i+1
+    si (QuienSoy=2)
+      Informar('Papeles',papeles)
+        
+  fin
+
+  robot B
+  variables
+    QuienSoy:numero
+    flores:numero
+    i:numero
+  comenzar 
+    flores:=0
+    i:=1
+    si (PosAv>5)
+      QuienSoy:=2
+    sino
+      QuienSoy:=1
+    derecha
+    repetir 2
+      si ((i=2)&(QuienSoy=1))
+        RecibirMensaje(flores,b2)
+
+      si (QuienSoy=2)
+        RecibirMensaje(flores,b1)
+      repetir 9
+        juntarFlores(flores)
+        mover
+      juntarFlores(flores)
+      si (QuienSoy=1)
+        EnviarMensaje(flores,b2)
+      si (i=1)
+        Pos((PosAv+11),PosCa)
+
+      si ((i=1)&(QuienSoy=2))
+        EnviarMensaje(flores,b1)
+
+      i:=i+1
+    si (QuienSoy=2)
+      Informar('flores',flores)
+        
+  fin
+
+variables
+  a1:A
+  a2:A
+  b1:B
+  b2:B
+comenzar
+  AsignarArea(a1,AreaA1A)
+  AsignarArea(a2,AreaA2A)
+  AsignarArea(b1,AreaB1A)
+  AsignarArea(b2,AreaB2A)
+
+  AsignarArea(a1,AreaA1B)
+  AsignarArea(a2,AreaA2B)
+  AsignarArea(b1,AreaB1B)
+  AsignarArea(b2,AreaB2B)
+  Iniciar(a1,1,1)
+  Iniciar(a2,11,1)
+  Iniciar(b1,1,5)
+  Iniciar(b2,11,5)
+fin

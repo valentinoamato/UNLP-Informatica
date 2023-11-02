@@ -1,0 +1,143 @@
+programa ejercicio4
+procesos
+  proceso QuienSoy(ES Nrobot:numero )
+  comenzar 
+    Nrobot:=((PosAv-20)/5)
+  fin
+
+  proceso juntarElementos (ES elementos:numero)
+  comenzar 
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      elementos:=elementos+1
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      elementos:=elementos+1
+  fin
+
+  proceso acceso(ES elementos:numero;E retorno:numero)
+  variables
+    Ca:numero
+    Av:numero
+  comenzar 
+    Random(Av,25,75)
+    Random(Ca,25,75)
+    Pos(Av,Ca)
+    juntarElementos(elementos)
+    Pos(retorno,1)
+  fin
+  
+  proceso comunicar(E ID:numero; E valor:boolean){Envia el mensaje valor al robot ID}
+  comenzar 
+    si (ID>2)
+      si (ID>3)
+        EnviarMensaje(valor,r4)
+      sino
+        EnviarMensaje(valor,r3)
+    sino
+      si (ID>1)
+        EnviarMensaje(valor,r2)  
+      sino
+        EnviarMensaje(valor,r1)
+  fin
+areas
+  cuadrante : AreaPC(25,25,75,75)
+  Arear1 : AreaP(25,1,25,1)
+  Arear2 : AreaP(30,1,30,1)
+  Arear3 : AreaP(35,1,35,1)
+  Arear4 : AreaP(40,1,40,1)
+  Arearj : AreaP(1,1,1,1)
+
+robots
+  robot recolector
+  variables
+    elementos:numero
+    Nrobot:numero
+    retorno:numero
+    acceder:boolean
+  comenzar 
+    QuienSoy(Nrobot)
+    acceder:=V
+    retorno:=PosAv
+    elementos:=0
+    mientras (acceder)
+      RecibirMensaje(acceder,rj)
+      si (acceder)
+        acceso(elementos,retorno)
+        EnviarMensaje(V,rj)
+    EnviarMensaje(Nrobot,rj)
+    EnviarMensaje(elementos,rj)
+    RecibirMensaje(acceder,rj)
+    si (acceder)
+      Pos(50,50)
+  fin
+
+
+
+  robot jefe
+  variables
+    ID:numero
+    IDMax:numero
+    elementosMax:numero
+    acceder:boolean
+    elementos:numero
+  comenzar
+    elementosMax:=-1
+    repetir 10
+      Random(ID,1,4)
+      comunicar(ID,V)
+      RecibirMensaje(acceder,*)
+    {Informa el fin de la recoleccion}
+    EnviarMensaje(F,r1)
+    EnviarMensaje(F,r2)
+    EnviarMensaje(F,r3)
+    EnviarMensaje(F,r4)
+    {Calcula robot ganador}
+    repetir 4
+      RecibirMensaje(ID,*)
+      si (ID>2)
+        si (ID>3)
+          RecibirMensaje(elementos,r4)
+        sino
+          RecibirMensaje(elementos,r3)
+      sino
+        si (ID>1)
+          RecibirMensaje(elementos,r2)  
+        sino
+          RecibirMensaje(elementos,r1)
+      si (elementos>elementosMax)
+        elementosMax:=elementos
+        IDMax:=ID
+      ID:=1
+    repetir 4
+      acceder:=(ID=IDMax)
+      comunicar(ID,acceder)
+      ID:=ID+1
+  fin
+
+variables
+  r1 : recolector
+  r2 : recolector
+  r3 : recolector
+  r4 : recolector
+  rj : jefe
+
+comenzar
+  AsignarArea(r1,cuadrante)
+  AsignarArea(r2,cuadrante)
+  AsignarArea(r3,cuadrante)
+  AsignarArea(r4,cuadrante)
+  
+  AsignarArea(r1,Arear1)
+  AsignarArea(r2,Arear2)
+  AsignarArea(r3,Arear3)
+  AsignarArea(r4,Arear4)
+  AsignarArea(rj,Arearj)
+
+  Iniciar(r1,25,1)
+  Iniciar(r2,30,1)
+  Iniciar(r3,35,1)
+  Iniciar(r4,40,1)
+  Iniciar(rj,1,1)
+
+fin

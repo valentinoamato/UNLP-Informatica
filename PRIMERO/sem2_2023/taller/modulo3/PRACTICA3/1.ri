@@ -1,0 +1,95 @@
+programa ejercicio1Clase3
+procesos
+  proceso juntarFlores(ES Flor:numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      Flor := Flor + 1
+  fin
+  proceso juntarPapeles(ES Papel:numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      Papel:=Papel + 1
+  fin
+areas
+  AreaFloreros : AreaPC(1,1,5,10)
+  AreaPapeleros : AreaPC(6,1,10,9)
+  AreaRF1 : AreaP(6,10,6,10)
+  AreaRF2 : AreaP(7,10,7,10)
+  AreaRP1 : AreaP(8,10,8,10)
+  AreaRP2 : AreaP(9,10,9,10)
+  AreaDeposito : AreaC(10,10,10,10)
+robots
+  robot tipoFlorero
+  variables
+    floresJuntadas:numero
+    Av:numero
+    Ca:numero
+    AvInicial:numero
+    {Random(Av,15,60)}
+  comenzar
+    AvInicial := PosAv
+    floresJuntadas := 0
+    repetir 5
+      Random(Av,1,5)
+      Random(Ca,1,10)
+      BloquearEsquina(Av,Ca)
+      Pos(Av,Ca)
+      juntarFlores(floresJuntadas)
+      Pos(AvInicial,10)
+      LiberarEsquina(Av,Ca)
+    repetir floresJuntadas
+      BloquearEsquina(10,10)
+      Pos(10,10)
+      depositarFlor
+      Pos(AvInicial,10)
+      LiberarEsquina(10,10)
+  fin  
+  robot tipoPapelero
+  variables
+    papelesJuntados:numero
+    Av:numero
+    Ca:numero
+    AvInicial:numero
+  comenzar
+    AvInicial:=PosAv
+    papelesJuntados:=0
+    repetir 3
+      Random(Av,6,10)
+      Random(Ca,1,9)
+      BloquearEsquina(Av,Ca)
+      Pos(Av,Ca)
+      juntarPapeles(papelesJuntados)
+      Pos(AvInicial,10)
+      LiberarEsquina(Av,Ca)
+    repetir papelesJuntados
+      BloquearEsquina(10,10)
+      Pos(10,10)
+      depositarPapel
+      Pos(AvInicial,10)
+      LiberarEsquina(10,10)
+  fin
+variables
+  RobotF1: tipoFlorero
+  RobotF2: tipoFlorero
+  RobotP1: tipoPapelero
+  RobotP2: tipoPapelero  
+comenzar
+  AsignarArea(RobotF1,AreaFloreros)
+  AsignarArea(RobotF1,AreaRF1)
+  AsignarArea(RobotF1,AreaDeposito)
+  AsignarArea(RobotF2,AreaFloreros)
+  AsignarArea(RobotF2,AreaRF2)
+  AsignarArea(RobotF2,AreaDeposito)
+  AsignarArea(RobotP1,AreaPapeleros)
+  AsignarArea(RobotP1,AreaRP1)
+  AsignarArea(RobotP1,AreaDeposito)
+  AsignarArea(RobotP2,AreaPapeleros)
+  AsignarArea(RobotP2,AreaRP2)
+  AsignarArea(RobotP2,AreaDeposito)
+  Iniciar(RobotF1,6,10)
+  Iniciar(RobotF2,7,10)
+  Iniciar(RobotP1,8,10)
+  Iniciar(RobotP2,9,10)
+fin 

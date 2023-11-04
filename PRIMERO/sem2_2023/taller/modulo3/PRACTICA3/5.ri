@@ -1,0 +1,90 @@
+programa ejercicio5
+areas
+  fuente : AreaPC(11,11,11,11)
+  Arear1 : AreaP(4,1,4,100)
+  Arear2 : AreaP(6,1,6,100)
+  Arear3 : AreaP(8,1,8,100)
+  Arear4 : AreaP(10,1,10,100)
+  Arearj : AreaP(1,1,1,1)
+
+robots
+  robot corredor
+  variables
+    ID:numero
+    continuar:boolean
+    Ca:numero
+    Av:numero
+  comenzar
+    Av:=PosAv
+    ID:=((PosAv-2)/2)
+    continuar:=V
+    
+    mientras ((continuar)&(PosCa<100))
+      Ca:=PosCa
+      BloquearEsquina(11,11)
+      Pos(11,11)
+      si (HayPapelEnLaEsquina)
+        tomarPapel
+      sino
+        continuar:=F
+      Pos(Av,Ca)
+      LiberarEsquina(11,11)
+      si (continuar)
+        depositarPapel
+        mover
+    EnviarMensaje(ID,rj)
+    Ca:=PosCa
+    EnviarMensaje(Ca,rj)
+  fin
+
+  robot jefe
+  variables
+    ID:numero
+    IDMax:numero
+    Ca:numero
+    CaMax:numero
+  comenzar
+    CaMax:=-1
+    repetir 4
+      RecibirMensaje(ID,*)
+      si (ID>2)
+        si (ID>3)
+          RecibirMensaje(Ca,r4)
+        sino
+          RecibirMensaje(Ca,r3)
+      sino
+        si (ID>1)
+          RecibirMensaje(Ca,r2)
+        sino
+          RecibirMensaje(Ca,r1)
+      si (Ca>CaMax)
+        CaMax:=Ca
+        IDMax:=ID
+    Informar(IDMax)
+  fin
+
+variables
+  r1 : corredor
+  r2 : corredor
+  r3 : corredor
+  r4 : corredor
+  rj : jefe
+comenzar
+  AsignarArea(r1,fuente)
+  AsignarArea(r2,fuente)
+  AsignarArea(r3,fuente)
+  AsignarArea(r4,fuente)
+
+  AsignarArea(r1,Arear1)
+  AsignarArea(r2,Arear2)
+  AsignarArea(r3,Arear3)
+  AsignarArea(r4,Arear4)
+  AsignarArea(rj,Arearj)
+
+  Iniciar(r1,4,1)
+  Iniciar(r2,6,1)
+  Iniciar(r3,8,1)
+  Iniciar(r4,10,1)
+  Iniciar(rj,1,1)
+
+fin

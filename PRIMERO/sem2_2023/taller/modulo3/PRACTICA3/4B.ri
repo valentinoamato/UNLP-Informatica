@@ -1,0 +1,87 @@
+programa ejercicio4
+areas
+  fuente : AreaPC(10,10,10,10)
+  destino : AreaC(11,11,11,11)
+  Arear1 : AreaP(9,9,9,9)
+  Arear2 : AreaP(9,10,9,10)
+  Arear3 : AreaP(9,11,9,11)
+  Arear4 : AreaP(9,12,9,12)
+  Arearj : AreaP(1,1,1,1)
+
+robots
+  robot recolector
+  variables
+    QuienSoy:numero
+    acceder:boolean
+    depositar:boolean
+  comenzar
+    QuienSoy:=(PosCa-8)
+    acceder:=V 
+    mientras (acceder)
+      BloquearEsquina(10,10)
+      Pos(10,10)
+      depositar:=HayFlorEnLaEsquina
+      si (depositar)
+        tomarFlor
+      sino
+        acceder:=F
+        EnviarMensaje(QuienSoy,rj)
+      Pos(9,(QuienSoy+8))
+      LiberarEsquina(10,10)
+      
+      BloquearEsquina(11,11)
+      Pos(11,11)
+      si (depositar)
+        depositarFlor
+      Pos(9,(QuienSoy+8))
+      LiberarEsquina(11,11)
+  fin
+
+  robot jefe
+  variables
+    ID:numero
+  comenzar
+    repetir 4
+      RecibirMensaje(ID,*)
+    Informar(ID)
+    BloquearEsquina(11,11)
+    Pos(11,11)
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+    Pos(1,1)
+    LiberarEsquina(11,11)
+  fin
+
+variables
+  r1: recolector
+  r2: recolector
+  r3: recolector
+  r4: recolector
+  rj: jefe
+
+comenzar 
+  AsignarArea(r1,fuente)
+  AsignarArea(r2,fuente)
+  AsignarArea(r3,fuente)
+  AsignarArea(r4,fuente)
+
+  AsignarArea(r1,destino)
+  AsignarArea(r2,destino)
+  AsignarArea(r3,destino)
+  AsignarArea(r4,destino)
+
+  AsignarArea(r1,Arear1)
+  AsignarArea(r2,Arear2)
+  AsignarArea(r3,Arear3)
+  AsignarArea(r4,Arear4)
+
+  AsignarArea(rj,destino)
+  AsignarArea(rj,Arearj)
+
+  Iniciar(r1,9,9)
+  Iniciar(r2,9,10)
+  Iniciar(r3,9,11)
+  Iniciar(r4,9,12)
+  Iniciar(rj,1,1)
+fin
+

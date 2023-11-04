@@ -1,0 +1,97 @@
+programa ejercicio4
+areas
+  AreaRec : AreaPC(2,2,10,10)
+  Arear1 : AreaP(2,1,2,1)
+  Arear2 : AreaP(3,1,3,1)
+  Arear3 : AreaP(4,1,4,1)
+  Arear4 : AreaP(5,1,5,1)
+  Arear5 : AreaP(1,1,1,1)
+
+robots
+  robot recolector
+  variables
+    juntar:boolean
+    Flores:numero
+    AvInicial:numero
+    Av:numero
+    Ca:numero
+  comenzar
+    Flores:=0
+    juntar:=V 
+    AvInicial:=PosAv
+    RecibirMensaje(Av,r5)
+    RecibirMensaje(Ca,r5)
+    mientras (juntar)
+      BloquearEsquina(Av,Ca)
+      Pos(Av,Ca)
+      si (HayFlorEnLaEsquina)
+        tomarFlor
+        Flores:=Flores+1
+      sino
+        juntar:=F 
+      Pos(AvInicial,1)
+      LiberarEsquina(Av,Ca)
+    EnviarMensaje((AvInicial-1),r5)
+    EnviarMensaje(Flores,r5)
+  fin
+
+  robot jefe
+  variables
+    ID:numero
+    IDMax:numero
+    FloresMax:numero
+    Flores:numero
+    Av:numero
+    Ca:numero
+  comenzar
+    Random(Av,2,10)
+    Random(Ca,2,10)
+    EnviarMensaje(Av,r1)
+    EnviarMensaje(Ca,r1)
+    EnviarMensaje(Av,r2)
+    EnviarMensaje(Ca,r2)
+    EnviarMensaje(Av,r3)
+    EnviarMensaje(Ca,r3)
+    EnviarMensaje(Av,r4)
+    EnviarMensaje(Ca,r4)
+    FloresMax:=-1
+    repetir 4
+      RecibirMensaje(ID,*)
+      si (ID>2)
+        si (ID>3)
+          RecibirMensaje(Flores,r4)
+        sino
+          RecibirMensaje(Flores,r3)
+      sino
+        si (ID>1)
+          RecibirMensaje(Flores,r2)
+        sino
+          RecibirMensaje(Flores,r1)
+      si (Flores>FloresMax)
+        FloresMax:=Flores
+        IDMax:=ID
+    Informar('EL_ROBOT_GANADOR_ES',ID)
+    Informar('CON',FloresMax)
+  fin
+variables
+  r1 : recolector
+  r2 : recolector
+  r3 : recolector
+  r4 : recolector
+  r5 : jefe
+comenzar 
+  AsignarArea(r1,Arear1)
+  AsignarArea(r1,AreaRec)
+  AsignarArea(r2,Arear2)
+  AsignarArea(r2,AreaRec)
+  AsignarArea(r3,Arear3)
+  AsignarArea(r3,AreaRec)
+  AsignarArea(r4,Arear4)
+  AsignarArea(r4,AreaRec)
+  AsignarArea(r5,Arear5)
+  Iniciar(r5,1,1)
+  Iniciar(r1,2,1)
+  Iniciar(r2,3,1)
+  Iniciar(r3,4,1)
+  Iniciar(r4,5,1)
+fin

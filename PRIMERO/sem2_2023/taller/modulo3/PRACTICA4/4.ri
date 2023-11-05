@@ -1,0 +1,129 @@
+programa ejercicio4
+procesos
+  proceso realizarTarea(E Tarea:numero)
+  comenzar
+    si (Tarea=1)
+      mientras (HayFlorEnLaEsquina)
+        tomarFlor
+    sino
+      si (Tarea=2)
+        mientras (HayPapelEnLaEsquina)
+          tomarPapel
+      sino
+        mientras (HayFlorEnLaBolsa)
+          depositarFlor
+        mientras (HayPapelEnLaBolsa)
+          depositarPapel
+  fin
+
+areas
+  cuadrante : AreaPC(2,2,100,100)
+  Areat1 : AreaP(2,1,2,1)
+  Areat2 : AreaP(3,1,3,1)
+  Areaj : AreaP(1,1,1,1)
+
+robots
+  robot trabajador
+  variables
+    ID:numero
+    Ca:numero
+    Av:numero
+    Tarea:numero
+    Terminar:boolean
+  comenzar 
+    Terminar:=F
+    RecibirMensaje(ID,rj)
+    mientras (~Terminar)
+      RecibirMensaje(Tarea,rj)
+      si (Tarea=4)
+        Terminar:=V
+      sino
+        RecibirMensaje(Av,rj)
+        RecibirMensaje(Ca,rj)
+        BloquearEsquina(Av,Ca)
+        Pos(Av,Ca)
+        realizarTarea(Tarea)
+        Pos((ID+1),1)
+        LiberarEsquina(Av,Ca)
+      EnviarMensaje(V,rj)
+  fin
+
+  robot jefe
+  variables
+    tarea:numero
+    tareaRealizada:numero
+    Estador1:boolean
+    Estador2:boolean
+    cantTareas:numero
+    ID:numero
+    Av:numero 
+    Ca:numero
+    Terminar:boolean
+  comenzar 
+    Terminar:=F
+    cantTareas:=0
+    Estador1:=V
+    Estador2:=V
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    mientras (~Terminar)
+      cantTareas:=cantTareas+1
+      si ((Estador1)&(Estador2))
+        Random(ID,1,2)
+      sino
+        si (Estador1)
+          ID:=1
+        sino
+          ID:=2
+      
+      Random(tarea,1,4)
+      si (ID=1)
+        EnviarMensaje(tarea,r1)
+      sino
+        EnviarMensaje(tarea,r2)
+      si (tarea=4)
+        si (ID=1)
+          Estador1:=F 
+        sino
+          Estador2:=F
+      sino
+        Random(Av,2,100)
+        Random(Ca,2,100)
+        si (ID=1)
+          EnviarMensaje(Av,r1)
+          EnviarMensaje(Ca,r1)
+        sino 
+          EnviarMensaje(Av,r2)
+          EnviarMensaje(Ca,r2)
+      si ((cantTareas=10)|(~((Estador1)|(Estador2))))
+        Terminar:=V
+      RecibirMensaje(tareaRealizada,*)
+
+    si (Estador1)
+      EnviarMensaje(4,r1)
+      RecibirMensaje(tareaRealizada,r1)
+
+    si (Estador2)
+      EnviarMensaje(4,r2)
+      RecibirMensaje(tareaRealizada,r2)
+  
+
+  fin
+
+variables
+  r1 : trabajador
+  r2:trabajador
+  rj:jefe
+
+comenzar
+  AsignarArea(r1,Areat1)
+  AsignarArea(r2,Areat2)
+  AsignarArea(rj,Areaj)
+
+  AsignarArea(r1,cuadrante)
+  AsignarArea(r2,cuadrante)
+
+  Iniciar(r1,2,1)
+  Iniciar(r2,3,1)
+  Iniciar(rj,1,1)
+fin

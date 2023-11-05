@@ -1,0 +1,114 @@
+programa ej1practica4
+procesos  
+  proceso comunicar (E ID:numero; E Valor:boolean)
+  comenzar
+    si (ID>2)
+      EnviarMensaje(Valor,cliente3)
+    sino
+      si(ID>1)
+        EnviarMensaje(Valor,cliente2)
+      sino
+        EnviarMensaje(Valor,cliente1)
+  fin
+  proceso depositarFlores(E cantFlores:numero)
+  comenzar
+    repetir cantFlores
+      depositarFlor
+  fin
+  proceso juntarFlores(E cant:numero)
+  comenzar
+    repetir cant
+      tomarFlor
+  fin    
+areas
+  areaServidor : AreaP(100,100,100,100)
+  areaD1S : AreaPC(1,1,1,100)
+  areaD2S : AreaPC(2,1,2,100)
+  areaD3S : AreaPC(3,1,3,100)
+robots
+  robot tiposervidor
+
+  variables
+    ID:numero
+    cant:numero
+    Av:numero
+    Ca:numero
+    terminados:numero
+  comenzar
+    terminados:=0
+    mientras (terminados < 3)
+      RecibirMensaje(ID, *)
+      si (ID = 1)
+        RecibirMensaje(cant, cliente1)
+        RecibirMensaje(Av, cliente1)
+        RecibirMensaje(Ca, cliente1)      
+      sino
+        si (ID = 2)
+          RecibirMensaje(cant, cliente2)
+          RecibirMensaje(Av, cliente2)
+          RecibirMensaje(Ca, cliente2)
+        sino
+          RecibirMensaje(cant, cliente3)
+          RecibirMensaje(Av, cliente3)
+          RecibirMensaje(Ca, cliente3)
+      si (cant = 0)
+        terminados:=terminados + 1
+        comunicar(ID,F)
+      sino
+        Pos(Av,Ca)
+        depositarFlores(cant)
+        Pos(100,100)
+        comunicar(ID,V)    
+  fin
+  robot cliente
+  variables
+    ID:numero
+    cant:numero
+    ACK:boolean
+    Av:numero
+    Ca:numero
+  comenzar
+    ID := PosAv
+    mientras (PosCa<100)
+      Random(cant,1,4)
+      EnviarMensaje(ID,servidor)
+      EnviarMensaje(cant,servidor)
+      Av:=PosAv
+      EnviarMensaje(Av,servidor)
+      Ca:=PosCa
+      EnviarMensaje((Ca+1),servidor)
+      RecibirMensaje(ACK,servidor)
+      si(ACK)
+        mover
+        juntarFlores(cant)
+        Pos(Av,(PosCa-1))
+        repetir cant
+          si (PosCa <>100)
+            depositarFlor
+            mover
+    si(HayFlorEnLaBolsa)
+      depositarFlor
+    EnviarMensaje(ID,servidor)
+    EnviarMensaje(0,servidor)
+    EnviarMensaje(1,servidor)
+    EnviarMensaje(1,servidor)
+  fin
+variables
+  cliente1:cliente
+  cliente2:cliente
+  cliente3:cliente
+  servidor:tiposervidor
+
+comenzar
+  AsignarArea(servidor,areaServidor)
+  AsignarArea(servidor,areaD1S)
+  AsignarArea(servidor,areaD2S)
+  AsignarArea(servidor,areaD3S)
+  AsignarArea(cliente1,areaD1S)
+  AsignarArea(cliente2,areaD2S)
+  AsignarArea(cliente3,areaD3S)
+  Iniciar(servidor,100,100)
+  Iniciar(cliente1,1,1)
+  Iniciar(cliente2,2,1)
+  Iniciar(cliente3,3,1)    
+fin

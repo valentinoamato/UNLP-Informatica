@@ -1,0 +1,105 @@
+programa ejercicio2
+procesos 
+  proceso juntarFlores(ES flores:numero)
+  comenzar
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso depositarConcurrente(ES flores:numero)
+  variables
+    av:numero
+    ca:numero
+  comenzar 
+    av:=PosAv
+    ca:=PosCa
+    repetir flores 
+      BloquearEsquina(50,50)
+      Pos(50,50)
+      depositarFlor
+      Pos(av,ca)
+      LiberarEsquina(50,50)
+    flores:=0
+  fin
+
+areas 
+  Arear1:AreaP(1,1,100,1)
+  Arear2:AreaP(1,2,100,2)
+  Arear3:AreaP(1,3,100,3)
+  Arearf:AreaP(1,4,1,4)
+  deposito:AreaC(50,50,50,50)
+
+robots
+  robot fiscalizador
+  variables
+    flores:numero
+  comenzar 
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    EnviarMensaje(3,r3)
+    repetir 3
+      RecibirMensaje(flores,*)
+    flores:=0
+    BloquearEsquina(50,50)
+    Pos(50,50)
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      flores:=flores+1
+    Pos(1,4)
+    LiberarEsquina(50,50)
+    Informar('La_cantidad_de_flores_juntadas_es',flores)
+  fin
+
+  robot recolector
+  variables
+    ID:numero
+    flores:numero
+    msj:numero
+  comenzar 
+    flores:=0
+    msj:=0
+    RecibirMensaje(ID,rf)
+    derecha 
+    repetir 10
+      repetir 10
+        juntarFlores(flores)
+        si (PosAv<100)
+          mover
+      depositarConcurrente(flores)
+      si (ID=1)
+        EnviarMensaje(msj,r2)
+        EnviarMensaje(msj,r3)
+      sino
+        si (ID=2)
+          EnviarMensaje(msj,r1)
+          EnviarMensaje(msj,r3)
+        sino
+          EnviarMensaje(msj,r1)
+          EnviarMensaje(msj,r2)
+      repetir 2
+        RecibirMensaje(msj,*)
+    EnviarMensaje(msj,rf)    
+  fin
+
+variables
+  r1:recolector
+  r2:recolector
+  r3:recolector
+  rf:fiscalizador
+
+comenzar 
+  AsignarArea(r1,Arear1)
+  AsignarArea(r2,Arear2)
+  AsignarArea(r3,Arear3)
+  AsignarArea(rf,Arearf)
+
+  AsignarArea(r1,deposito)
+  AsignarArea(r2,deposito)
+  AsignarArea(r3,deposito)
+  AsignarArea(rf,deposito)
+
+  Iniciar(r1,1,1)
+  Iniciar(r2,1,2)
+  Iniciar(r3,1,3)
+  Iniciar(rf,1,4)
+fin

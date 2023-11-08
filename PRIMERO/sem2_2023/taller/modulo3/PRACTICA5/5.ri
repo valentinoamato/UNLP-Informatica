@@ -1,0 +1,77 @@
+programa ejercicio5
+areas
+  Arear1 : AreaP(10,1,10,1)
+  Arear2 : AreaP(11,1,11,1)
+  Arear3 : AreaP(12,1,12,1)
+  Arears : AreaP(13,1,13,1)
+  deposito : AreaC(100,1,100,1)
+
+robots
+  robot servidor
+  variables
+    papeles:numero
+    ID:numero
+  comenzar 
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    EnviarMensaje(3,r3)
+    repetir 12
+      Random(papeles,1,5)
+      RecibirMensaje(ID,*)
+      BloquearEsquina(100,1)
+      Pos(100,1)
+      repetir papeles
+        depositarPapel
+      Pos(13,1)
+      LiberarEsquina(100,1)
+      si (ID=1)
+        EnviarMensaje(papeles,r1)
+      sino
+        si (ID=2)
+          EnviarMensaje(papeles,r2)
+        sino
+          EnviarMensaje(papeles,r3)
+  fin
+
+  robot cliente
+  variables
+    ID:numero
+    papeles:numero
+    AvInicial:numero
+  comenzar 
+    AvInicial:=PosAv
+    RecibirMensaje(ID,rs)
+    repetir 4
+      EnviarMensaje(ID,rs)
+      RecibirMensaje(papeles,rs)
+      repetir papeles
+        BloquearEsquina(100,1)
+        Pos(100,1)
+        tomarPapel
+        Pos(AvInicial,1)
+        LiberarEsquina(100,1)
+        depositarPapel
+  fin
+
+variables
+  r1:cliente
+  r2:cliente
+  r3:cliente
+  rs:servidor
+
+comenzar 
+  AsignarArea(r1,Arear1)
+  AsignarArea(r2,Arear2)
+  AsignarArea(r3,Arear3)
+  AsignarArea(rs,Arears)
+
+  AsignarArea(r1,deposito)
+  AsignarArea(r2,deposito)
+  AsignarArea(r3,deposito)
+  AsignarArea(rs,deposito)
+
+  Iniciar(r1,10,1)
+  Iniciar(r2,11,1)
+  Iniciar(r3,12,1)
+  Iniciar(rs,13,1)
+fin

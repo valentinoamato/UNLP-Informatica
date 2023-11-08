@@ -1,0 +1,112 @@
+programa ejercicio4
+areas 
+  cuadrante : AreaPC(40,40,60,60)
+  deposito : AreaC(10,10,10,10)
+  Arear1 : AreaP(1,1,1,1)
+  Arear2 : AreaP(2,1,2,1)
+  Arear3 : AreaP(3,1,3,1)
+  Arearj : AreaP(4,1,4,1)
+
+robots
+  robot jefe
+  variables
+    Av:numero
+    Ca:numero
+    ID:numero
+    cant:numero
+  comenzar 
+    cant:=0
+    repetir 8
+      Random(ID,1,3)
+      Random(Av,40,60)
+      Random(Ca,40,60)
+      si (ID=1)
+        EnviarMensaje(Av,r1)
+        EnviarMensaje(Ca,r1)
+      sino
+        si (ID=2)
+          EnviarMensaje(Av,r2)
+          EnviarMensaje(Ca,r2)
+        sino
+          EnviarMensaje(Av,r3)
+          EnviarMensaje(Ca,r3)
+    
+    EnviarMensaje(10,r1)
+    EnviarMensaje(10,r1)
+    EnviarMensaje(10,r2)
+    EnviarMensaje(10,r2)
+    EnviarMensaje(10,r3)
+    EnviarMensaje(10,r3)
+    
+    repetir 3
+      RecibirMensaje(ID,*)
+    BloquearEsquina(10,10)
+    Pos(10,10)
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      cant:=cant+1
+    Pos(4,1)
+    LiberarEsquina(10,10)
+    Informar('La_cantidad_de_flores_es',cant)
+  fin
+
+  robot florero
+  variables
+    continuar:boolean
+    Av:numero
+    Ca:numero
+    ID:numero
+    cant:numero
+  comenzar 
+    continuar:=V 
+    ID:=PosAv
+    cant:=0
+    mientras (continuar)
+      RecibirMensaje(Av,rj)
+      RecibirMensaje(Ca,rj)
+      si ((Av=10)&(Ca=10))
+        continuar:=F
+      sino
+        BloquearEsquina(Av,Ca)
+        Pos(Av,Ca)
+        mientras (HayFlorEnLaEsquina)
+          tomarFlor
+          cant:=cant+1
+        Pos(ID,1)
+        LiberarEsquina(Av,Ca)
+    BloquearEsquina(10,10)
+    Pos(10,10)
+    repetir cant 
+      depositarFlor 
+    Pos(ID,1)
+    LiberarEsquina(10,10)
+    EnviarMensaje(ID,rj)
+  fin
+
+variables
+  r1 : florero
+  r2 : florero
+  r3 : florero
+  rj:jefe
+
+comenzar
+  AsignarArea(r1,Arear1)
+  AsignarArea(r2,Arear2)
+  AsignarArea(r3,Arear3)
+  AsignarArea(rj,Arearj)
+
+  AsignarArea(r1,deposito)
+  AsignarArea(r2,deposito)
+  AsignarArea(r3,deposito)
+  AsignarArea(rj,deposito)
+
+  AsignarArea(r1,cuadrante)
+  AsignarArea(r2,cuadrante)
+  AsignarArea(r3,cuadrante)
+
+  Iniciar(r1,1,1)
+  Iniciar(r2,2,1)
+  Iniciar(r3,3,1)
+  Iniciar(rj,4,1)
+
+fin

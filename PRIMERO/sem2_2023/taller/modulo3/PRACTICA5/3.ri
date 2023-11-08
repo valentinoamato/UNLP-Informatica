@@ -1,0 +1,115 @@
+programa ejercicio3
+procesos
+  proceso depositarFlores(E flores:numero)
+  variables
+    Av:numero 
+    Ca:numero
+  comenzar
+    Av:=PosAv
+    Ca:=PosCa
+    repetir flores
+      BloquearEsquina(10,10)
+      Pos(10,10)
+      depositarFlor
+      Pos(Av,Ca)
+      LiberarEsquina(10,10)
+  fin
+  
+areas
+  deposito:AreaC(10,10,10,10)
+  Arear1:AreaP(1,3,100,3)
+  Arear2:AreaP(1,4,100,4)
+  Arearj:AreaP(1,5,1,5)
+ 
+robots 
+  robot cosechador
+  variables
+    flores:numero
+    recolectores:numero
+    bolsa:numero
+    MenosUnoRinfoTeOdio:numero
+  comenzar
+    recolectores:=2
+    bolsa:=0
+    MenosUnoRinfoTeOdio:=-1 {Esta variable tiene como unico proposito evitar que el rinfo de error en la operacion (flores=-1)}
+    mientras (recolectores>0)
+      RecibirMensaje(flores,*)
+      si (flores=MenosUnoRinfoTeOdio)
+        recolectores:=recolectores-1
+      sino
+        bolsa:=bolsa+flores
+        repetir flores   
+          BloquearEsquina(10,10)
+          Pos(10,10)
+          tomarFlor
+          Pos(1,5)
+          LiberarEsquina(10,10)
+    Informar('La_cantidad_de_flores_es',bolsa)
+  fin
+  
+  robot recolector
+  variables
+    flores:numero
+    Av:numero
+    Ca:numero
+    continuar:boolean
+    esquinas:numero
+  comenzar
+    flores:=0
+    esquinas:=0
+    continuar:=V
+    derecha
+    mientras (continuar)
+      si (HayFlorEnLaEsquina)
+        tomarFlor
+        flores:=flores+1
+        si (flores=10)
+          depositarFlores(flores)
+          EnviarMensaje(flores,rj)
+          flores:=0
+          esquinas:=0
+      sino
+        si (PosAv<100)
+          mover
+          esquinas:=esquinas+1
+          si ((esquinas=5)&(flores>0))
+            depositarFlores(flores)
+            EnviarMensaje(flores,rj)
+            flores:=0
+            esquinas:=0
+        sino
+          continuar:=F
+    si (flores>0)
+      depositarFlores(flores)
+      EnviarMensaje(flores,rj)
+    EnviarMensaje(-1,rj)
+  fin
+  
+variables
+  r1:recolector
+  r2:recolector
+  rj:cosechador
+
+comenzar
+  AsignarArea(r1,Arear1)
+  AsignarArea(r2,Arear2)
+  AsignarArea(rj,Arearj)
+  
+  AsignarArea(r1,deposito)
+  AsignarArea(r2,deposito)
+  AsignarArea(rj,deposito)
+  
+  Iniciar(r1,1,3)
+  Iniciar(r2,1,4)
+  Iniciar(rj,1,5)
+  
+fin
+    
+          
+          
+    
+      
+  
+      
+  
+  

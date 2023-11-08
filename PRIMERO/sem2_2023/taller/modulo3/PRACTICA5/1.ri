@@ -1,0 +1,140 @@
+programa ejercicio1
+procesos 
+  proceso juntarFlores(ES flores:numero)
+  comenzar 
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      flores:=flores+1
+  fin
+
+  proceso juntarPapeles(ES papeles:numero)
+  comenzar 
+    mientras (HayPapelEnLaEsquina)
+      tomarPapel
+      papeles:=papeles+1
+  fin
+
+areas
+  Arear1A:AreaP(2,1,2,97)
+  Arear2A:AreaP(3,1,3,97)
+  Areaa1A:AreaP(4,98,100,98)
+  Areaa2A:AreaP(4,99,100,99)
+
+  colision:AreaC(2,98,3,99)
+
+  Arear1B:AreaP(2,100,2,100)
+  Arear2B:AreaP(3,100,3,100)
+  Areaa1B:AreaP(1,98,1,98)
+  Areaa2B:AreaP(1,99,1,99)
+
+  Arearj:AreaP(10,10,10,10)
+
+robots
+  robot rojo
+  variables
+    flores:numero
+    calle:numero
+    avenida:numero
+  comenzar
+    flores:=0
+    repetir 96
+      juntarFlores(flores)
+      mover
+    juntarFlores(flores)
+    calle:=(PosCa+1)
+    avenida:=PosAv
+    BloquearEsquina(avenida,calle)
+    mover
+    juntarFlores(flores)
+    BloquearEsquina(avenida,(calle+1))
+    mover
+    LiberarEsquina(avenida,calle)
+    juntarFlores(flores)
+    mover
+    LiberarEsquina(avenida,(calle+1))
+    juntarFlores(flores)
+    EnviarMensaje(flores,rj)
+  fin
+
+  robot azul
+  variables
+    papeles:numero
+    avenida:numero
+    calle:numero
+  comenzar
+    papeles:=0
+    avenida:=PosAv
+    calle:=PosCa
+    derecha
+    juntarPapeles(papeles)
+    BloquearEsquina((avenida+1),calle)
+    mover
+    juntarPapeles(papeles)
+    BloquearEsquina((avenida+2),calle)
+    mover
+    LiberarEsquina((avenida+1),calle)
+    juntarPapeles(papeles)
+    mover
+    LiberarEsquina((avenida+2),calle)
+    repetir 96
+      juntarPapeles(papeles)
+      mover
+    juntarPapeles(papeles)
+    EnviarMensaje(papeles,rj)
+  fin
+
+  robot jefe 
+  variables
+    elementos:numero 
+    papeles:numero 
+    flores:numero 
+  comenzar 
+    RecibirMensaje(elementos,r1)
+    flores:=flores+elementos
+    RecibirMensaje(elementos,r2)
+    flores:=flores+elementos
+    RecibirMensaje(elementos,a1)
+    papeles:=papeles+elementos
+    RecibirMensaje(elementos,a2)
+    papeles:=papeles+elementos
+    elementos:=0
+    si (flores>papeles)
+      Informar('Gano_el_equipo_rojo',elementos)
+    sino
+      Informar('Gano_el_equipo_azul',elementos)
+
+  fin
+
+variables
+  r1:rojo
+  r2:rojo
+  a1:azul
+  a2:azul
+  rj:jefe
+
+comenzar
+  AsignarArea(r1,Arear1A)
+  AsignarArea(r2,Arear2A)
+  AsignarArea(a1,Areaa1A)
+  AsignarArea(a2,Areaa2A)
+
+  AsignarArea(r1,Arear1B)
+  AsignarArea(r2,Arear2B)
+  AsignarArea(a1,Areaa1B)
+  AsignarArea(a2,Areaa2B)
+
+  AsignarArea(r1,colision)
+  AsignarArea(r2,colision)
+  AsignarArea(a1,colision)
+  AsignarArea(a2,colision)
+
+  AsignarArea(rj,Arearj)
+
+  Iniciar(r1,2,1)
+  Iniciar(r2,3,1)
+  Iniciar(a1,1,98)
+  Iniciar(a2,1,99)
+  Iniciar(rj,10,10)
+
+
+fin

@@ -1,0 +1,113 @@
+programa parcial1
+procesos 
+  proceso juntarFlores(ES flores:numero)
+  comenzar 
+    mientras (HayFlorEnLaEsquina)
+      flores:=flores+1
+      tomarFlor
+  fin
+
+areas
+  Arear1:AreaP(1,1,6,6)
+  Arear2:AreaP(7,1,12,6)
+  Arear3:AreaP(13,1,18,6)
+  Arearj:AreaP(20,1,20,1)
+  deposito:AreaPC(10,10,10,10)
+
+robots 
+  robot jefe
+  variables
+    floresr1:numero
+    floresr2:numero
+    floresr3:numero
+    estador1:boolean
+    estador2:boolean
+    estador3:boolean
+  comenzar 
+    floresr1:=0
+    floresr2:=0
+    floresr3:=0
+    estador1:=F
+    estador2:=F
+    estador3:=F
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    EnviarMensaje(3,r3)
+    repetir 4
+      {Recibe de los robots la cantidad de flores que juntaron hasta el momento}
+      RecibirMensaje(floresr1,r1)
+      RecibirMensaje(floresr2,r2)
+      RecibirMensaje(floresr3,r3)
+      {Cuando todos terminaron se inicia el proximo lado}
+      EnviarMensaje(V,r1)
+      EnviarMensaje(V,r2)
+      EnviarMensaje(V,r3)
+    {Informa el ganador}
+    si ((floresr1>floresr2)&(floresr1>floresr3))
+      Informar('El_ganador_fue_r1',floresr1)
+      estador1:=V
+    sino
+      si ((floresr2>floresr1)&(floresr2>floresr3))
+        Informar('El_ganador_fue_r2',floresr2)
+        estador2:=V
+      sino 
+        Informar('El_ganador_fue_r3',floresr3)
+        estador3:=V 
+    {Avisa a los robots cual fue el ganador}
+    EnviarMensaje(estador1,r1) 
+    EnviarMensaje(estador2,r2) 
+    EnviarMensaje(estador3,r3) 
+  fin
+
+  robot trabajador
+  variables
+    flores:numero
+    estado:boolean
+    ID:numero
+    AvIni:numero 
+  comenzar
+    AvIni:=PosAv
+    RecibirMensaje(ID,rj)
+    flores:=0
+    repetir 4
+      repetir 5
+        juntarFlores(flores)
+        mover
+      juntarFlores(flores)
+      derecha
+      EnviarMensaje(flores,rj)
+      RecibirMensaje(estado,rj)
+    {Recibe del rj si gano o no}  
+    RecibirMensaje(estado,rj)
+    si ~(estado){si no gano}
+      repetir flores 
+        BloquearEsquina(10,10)
+        Pos(10,10)
+        depositarFlor
+        Pos(AvIni,1)
+        LiberarEsquina(10,10)
+  fin 
+
+variables
+  r1:trabajador
+  r2:trabajador
+  r3:trabajador
+  rj:jefe
+comenzar 
+  AsignarArea(r1,Arear1)
+  AsignarArea(r2,Arear2)
+  AsignarArea(r3,Arear3)
+  AsignarArea(rj,Arearj)
+
+  AsignarArea(r1,deposito)
+  AsignarArea(r2,deposito)
+  AsignarArea(r3,deposito)
+
+  Iniciar(r1,1,1)
+  Iniciar(r2,7,1)
+  Iniciar(r3,13,1)
+  Iniciar(rj,20,1)
+fin
+
+
+

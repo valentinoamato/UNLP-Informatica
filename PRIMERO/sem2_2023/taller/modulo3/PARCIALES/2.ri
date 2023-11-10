@@ -1,0 +1,155 @@
+programa parcial2
+procesos
+  proceso doblar(ES direccion:numero)
+  comenzar
+    derecha
+    direccion:=direccion+1
+    si (direccion=5)
+      direccion:=1
+  fin
+  proceso juntarTodo(ES flores:numero;ES papeles:numero)
+  comenzar 
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      flores:=flores+1
+    mientras (HayPapelEnLaEsquina)
+      tomarPapel
+      papeles:=papeles+1
+  fin
+  
+  proceso bloquear(ES flores:numero;ES papeles:numero;E direccion:numero)
+  {bloquea la proxima esquina, se mueve, juntaTodo, se mueve, libera}
+  variables
+    av:numero
+    ca:numero
+  comenzar 
+    av:=PosAv
+    ca:=PosCa
+    si (direccion>2)
+      si (direccion>3)
+        av:=av-1
+      sino
+        ca:=ca-1
+    sino
+      si (direccion>1)
+        av:=av+1
+      sino
+        ca:=ca+1
+    BloquearEsquina(av,ca)
+    mover
+    juntarTodo(flores,papeles)
+    mover
+    LiberarEsquina(av,ca)
+  fin
+  
+  proceso cuadrante(ES flores:numero;ES papeles:numero;ES direccion:numero)
+  variables
+    av:numero
+    ca:numero
+  comenzar
+    repetir 2
+      repetir 4
+        juntarTodo(flores,papeles)
+        bloquear(flores,papeles,direccion)
+      doblar(direccion)
+      repetir 2
+        juntarTodo(flores,papeles)
+        mover
+      doblar(direccion)
+  fin
+    
+  
+areas 
+  recorrido:AreaC(1,1,9,9)
+  Arear1:AreaP(20,1,20,1)
+  Arear2:AreaP(20,2,20,2)
+  Arear3:AreaP(20,4,20,4)
+  Arear4:AreaP(20,5,20,5)
+  Arearj:AreaP(20,15,20,15)
+
+robots
+  robot juntador
+  variables
+    flores:numero
+    papeles:numero
+    ID:numero
+    direccion:numero
+  comenzar
+    flores:=0
+    papeles:=0
+    direccion:=1
+    RecibirMensaje(ID,rj)
+    si (ID>2)
+      doblar(direccion)
+      si (ID>3)
+        Pos(1,8)
+      sino
+        Pos(1,4)
+    sino
+      si (ID>1)
+        Pos(6,1)
+      sino
+        Pos(2,1)
+    
+    cuadrante(flores,papeles,direccion)
+    EnviarMensaje(flores,rj)
+    EnviarMensaje(papeles,rj)
+  fin
+  
+  robot jefe
+  variables
+    flores:numero
+    papeles:numero
+    elementos:numero
+  comenzar
+    flores:=0
+    papeles:=0
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    EnviarMensaje(3,r3)
+    EnviarMensaje(4,r4)
+    RecibirMensaje(elementos,r1)
+    flores:=flores+elementos
+    RecibirMensaje(elementos,r1)
+    papeles:=papeles+elementos
+    RecibirMensaje(elementos,r2)
+    flores:=flores+elementos
+    RecibirMensaje(elementos,r2)
+    papeles:=papeles+elementos
+    RecibirMensaje(elementos,r3)
+    flores:=flores+elementos
+    RecibirMensaje(elementos,r3)
+    papeles:=papeles+elementos
+    RecibirMensaje(elementos,r4)
+    flores:=flores+elementos
+    RecibirMensaje(elementos,r4)
+    papeles:=papeles+elementos
+    Informar('La_cantidad_de_flores_es',flores)
+    Informar('La_cantidad_de_papeles_es',papeles)
+  fin
+
+variables
+  r1:juntador
+  r2:juntador
+  r3:juntador
+  r4:juntador
+  rj:jefe
+ 
+comenzar
+  AsignarArea(r1,Arear1)
+  AsignarArea(r2,Arear2)
+  AsignarArea(r3,Arear3)
+  AsignarArea(r4,Arear4)
+  AsignarArea(rj,Arearj)
+  
+  AsignarArea(r1,recorrido)
+  AsignarArea(r2,recorrido)
+  AsignarArea(r3,recorrido)
+  AsignarArea(r4,recorrido)
+  
+  Iniciar(r1,20,1)
+  Iniciar(r2,20,2)
+  Iniciar(r3,20,4)
+  Iniciar(r4,20,5)
+  Iniciar(rj,20,15)
+fin

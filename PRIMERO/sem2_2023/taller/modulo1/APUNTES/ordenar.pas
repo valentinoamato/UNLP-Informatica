@@ -3,22 +3,13 @@ type
 vector = array [1..100] of integer;
 
 
-procedure cargar(var v:vector; var dimL:integer); //Carga el vector con numeros hasta que se ingresa el 0
+procedure cargar(var v:vector; var dimL:integer); //Carga el vector con una cantidad aleatoria (5;15) de  numeros aleatorios (-15;15)
 var
-    i,n:integer;
+    i:integer;
 begin
-    i:=1;
-    writeln('Ingrese un numero: ');
-    readln(n);
-    diml:=0;
-    while (n<>0) do
-        begin
-            v[i]:=n;
-            i:=i+1;
-            dimL:=dimL+1;
-            write('Ingrese un numero: ');
-            readln(n);
-        end;
+    diml:=random(11)+5;
+    for i:=1 to diml do
+        v[i]:=random(31)-15;;
 end;
 
 

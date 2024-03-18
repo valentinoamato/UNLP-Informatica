@@ -1,0 +1,18 @@
+1 20000.50  Samsung
+10 5  Smart phone
+Samsung galaxy s20
+2 30000.30  Apple
+6 3  Apple phone
+Iphone 15
+3 15000.30  Xiaomi
+2 6  Redmi phone
+Redmi 15
+4 18000.80  Nokia
+6 10  Completamente indestructible
+Nokia 1100
+5 12500.50 Sony
+0 3 Smarth phone
+Xperia
+6 21000.00 LG
+0 3 Ligero
+Sportif

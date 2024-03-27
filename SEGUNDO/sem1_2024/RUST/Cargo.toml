@@ -1,0 +1,3 @@
+[workspace]
+resolver = "2"
+members = ["PRACTICA1/ej1_1", "PRACTICA1/ej1_10", "PRACTICA1/ej1_11", "PRACTICA1/ej1_12", "PRACTICA1/ej1_2", "PRACTICA1/ej1_3", "PRACTICA1/ej1_4", "PRACTICA1/ej1_5", "PRACTICA1/ej1_6", "PRACTICA1/ej1_7", "PRACTICA1/ej1_8", "PRACTICA1/ej1_9"]

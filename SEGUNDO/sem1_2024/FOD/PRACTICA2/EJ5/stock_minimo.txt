@@ -1,0 +1,17 @@
+Los productos con stock disponible menor al minimo son:
+1 13 20 5.99 Papas Congeladas Rodajas de Papas cortadas en rodajas y congeladas
+2 23 24 4.49 Espinacas Congeladas Espinacas frescas y congeladas al vacío
+4 16 20 6.79 Pizza de Queso Pizza con queso mozzarella y masa fina
+5 -28 10 3.99 Helado de Vainilla Helado cremoso de vainilla en envase de 1 litro
+7 -2 16 9.49 Filetes de Pescado Filetes de pescado blanco empanizados
+8 15 20 4.29 Brocoli Congelado Brócoli fresco y congelado al vacío
+9 5 16 7.29 Tarta de Frutilla Tarta de frutilla precocida, lista para hornear
+10 -9 12 5.49 Pollo Entero Congelado Pollo entero limpio y congelado al vacío
+12 2 14 6.99 Ensalada de Frutas Ensalada de frutas variadas, congeladas al vacío
+13 15 18 5.79 Palitos de Pescado Palitos de pescado rebozados y precocidos
+14 17 20 7.29 Pizza de Pepperoni Pizza con pepperoni y masa fina
+15 -13 12 4.49 Helado de Chocolate Helado cremoso de chocolate en envase de 1 litro
+17 -4 18 3.99 Brocoli y Zanahoria Congelados Mezcla de brócoli y zanahoria congelados
+18 11 22 8.49 Lasagna de Carne Lasagna de carne vacuna, lista para hornear
+19 -4 14 10.99 Calamares a la Romana Calamares rebozados y precocidos
+20 4 14 3.99 Helado de Frutilla Helado cremoso de frutilla en envase de 1 litro

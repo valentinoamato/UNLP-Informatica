@@ -1,0 +1,24 @@
+1200 5000 Buenos Aires
+900 3500 CABA
+180 900 Catamarca
+250 1500 Chaco
+200 1100 Chubut
+600 4500 Cordoba
+200 2000 Corrientes
+250 2200 Entre Ríos
+150 1000 Formosa
+180 1200 Jujuy
+120 800 La Pampa
+100 700 La Rioja
+220 2000 Mendoza
+160 1600 Misiones
+100 1000 Neuquén
+130 1300 Río Negro
+170 1700 Salta
+110 1100 San Juan
+90 900 San Luis
+70 700 Santa Cruz
+350 3500 Santa Fe
+190 1900 Santiago del Estero
+35 350 Tierra del Fuego
+220 2200 Tucumán

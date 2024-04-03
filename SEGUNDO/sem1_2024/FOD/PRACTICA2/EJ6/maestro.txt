@@ -1,0 +1,15 @@
+Codigo: 1, Fecha: 4, Tiempo Total: 40
+Codigo: 2, Fecha: 2, Tiempo Total: 46
+Codigo: 3, Fecha: 1, Tiempo Total: 47
+Codigo: 4, Fecha: 5, Tiempo Total: 61
+Codigo: 5, Fecha: 3, Tiempo Total: 27
+Codigo: 6, Fecha: 3, Tiempo Total: 27
+Codigo: 7, Fecha: 7, Tiempo Total: 34
+Codigo: 8, Fecha: 3, Tiempo Total: 17
+Codigo: 9, Fecha: 3, Tiempo Total: 53
+Codigo: 10, Fecha: 6, Tiempo Total: 32
+Codigo: 11, Fecha: 3, Tiempo Total: 31
+Codigo: 12, Fecha: 1, Tiempo Total: 47
+Codigo: 13, Fecha: 7, Tiempo Total: 45
+Codigo: 14, Fecha: 4, Tiempo Total: 39
+Codigo: 15, Fecha: 3, Tiempo Total: 33

@@ -1,0 +1,12 @@
+001 3 2 Perez Juan
+002 4 1 Lopez Maria
+003 5 3 Garcia Carlos
+004 2 2 Rodriguez Ana
+005 6 4 Hernandez Luis
+006 3 2 Martinez Sofia
+007 4 3 Sanchez Pedro
+008 5 2 Gomez Laura
+009 3 1 Torres Diego
+010 4 3 Fernandez Ana
+011 6 4 Ruiz Pablo
+012 5 2 Jimenez Lucia

@@ -1,0 +1,17 @@
+1 80 900 Buenos Aires
+1 12 150 Catamarca
+3 15 180 Chaco
+1 60 700 Cordoba
+4 15 200 Jujuy
+5 10 150 La Pampa
+6 5 100 Mendoza
+7 20 300 Misiones
+8 30 400 Neuquén
+9 25 350 Río Negro
+10 18 200 Salta
+11 22 260 San Juan
+12 15 220 San Luis
+13 20 280 Santa Cruz
+14 25 300 Santa Fe
+15 18 220 Santiago del Estero
+16 22 260 Tierra del Fuego

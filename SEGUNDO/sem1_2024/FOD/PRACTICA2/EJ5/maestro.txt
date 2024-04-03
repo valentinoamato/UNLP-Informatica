@@ -1,0 +1,20 @@
+001 60 20 5.99 Papas Congeladas@Rodajas de Papas cortadas en rodajas y congeladas
+002 72 24 4.49 Espinacas Congeladas@Espinacas frescas y congeladas al vacío
+003 90 30 7.99 Nuggets de Pollo@Bocados de pollo empanizados y precocidos
+004 60 20 6.79 Pizza de Queso@Pizza con queso mozzarella y masa fina
+005 30 10 3.99 Helado de Vainilla@Helado cremoso de vainilla en envase de 1 litro
+006 108 36 8.99 Hamburguesas de Carne@Hamburguesas de carne vacuna, listas para cocinar
+007 48 16 9.49 Filetes de Pescado@Filetes de pescado blanco empanizados
+008 60 20 4.29 Brocoli Congelado@Brócoli fresco y congelado al vacío
+009 48 16 7.29 Tarta de Frutilla@Tarta de frutilla precocida, lista para hornear
+010 36 12 5.49 Pollo Entero Congelado@Pollo entero limpio y congelado al vacío
+011 72 24 3.99 Papas Fritas@Papas cortadas en bastones y precocidas
+012 42 14 6.99 Ensalada de Frutas@Ensalada de frutas variadas, congeladas al vacío
+013 54 18 5.79 Palitos de Pescado@Palitos de pescado rebozados y precocidos
+014 60 20 7.29 Pizza de Pepperoni@Pizza con pepperoni y masa fina
+015 36 12 4.49 Helado de Chocolate@Helado cremoso de chocolate en envase de 1 litro
+016 90 30 6.99 Milanesas de Pollo@Milanesas de pollo empanizadas y precocidas
+017 48 18 3.99 Brocoli y Zanahoria Congelados@Mezcla de brócoli y zanahoria congelados
+018 66 22 8.49 Lasagna de Carne@Lasagna de carne vacuna, lista para hornear
+019 42 14 10.99 Calamares a la Romana@Calamares rebozados y precocidos
+020 42 14 3.99 Helado de Frutilla@Helado cremoso de frutilla en envase de 1 litro

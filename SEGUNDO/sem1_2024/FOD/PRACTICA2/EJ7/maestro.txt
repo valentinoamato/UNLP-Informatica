@@ -1,0 +1,20 @@
+001 1 20 10 5 2 La Plata@Alfa
+001 2 20 10 5 2 La Plata@Beta
+002 1 25 15 8 3 Mar del Plata@Alfa
+002 2 25 15 8 3 Mar del Plata@Beta
+003 1 30 20 12 4 Bahía Blanca@Alfa
+003 2 30 20 12 4 Bahía Blanca@Beta
+004 1 35 25 15 5 Lomas de Zamora@Alfa
+004 2 35 25 15 5 Lomas de Zamora@Beta
+005 1 40 30 18 6 Quilmes@Alfa
+005 2 40 30 18 6 Quilmes@Beta
+006 1 45 35 20 7 Avellaneda@Alfa
+006 2 45 35 20 7 Avellaneda@Beta
+007 1 50 40 25 8 Lanús@Alfa
+007 2 50 40 25 8 Lanús@Beta
+008 1 55 45 28 9 Morón@Alfa
+008 2 55 45 28 9 Morón@Beta
+009 1 60 50 30 10 San Isidro@Alfa
+009 2 60 50 30 10 San Isidro@Beta
+010 1 65 55 32 11 Tigre@Alfa
+010 2 65 55 32 11 Tigre@Beta

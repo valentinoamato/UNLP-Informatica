@@ -1,0 +1,24 @@
+1 3 Saludos, espero que estés bien
+1 2 Hola, este es un mensaje de prueba
+1 4 Tarea, asignación de tarea pendiente
+1 3 Despedida, nos vemos pronto
+1 2 Respuesta, aquí está la información que necesitas
+2 1 Información, adjunto el informe solicitado
+2 3 Pedido, por favor, envía los documentos
+2 4 Reunión, recordatorio de la reunión de mañana
+2 1 Proyecto, adjunto el plan del proyecto
+2 4 Confirmación, confirmo mi asistencia a la reunión
+3 5 Sugerencia, te recomiendo leer este artículo
+3 1 Confirmación, confirma tu asistencia
+3 2 Solicitud, por favor, envía el documento firmado
+3 4 Solicitud, por favor, revisa este documento
+4 5 Urgente, por favor, responde cuanto antes
+4 2 Recordatorio, recuerda enviar el informe
+4 3 Notificación, notificación sobre el evento
+4 1 Recordatorio, recuerda la fecha límite
+4 5 Confirmación, confirmo la recepción del mensaje
+5 1 Solicitud, necesito tu ayuda con un proyecto
+5 4 Respuesta, aquí tienes la información solicitada
+5 2 Confirmación, confirmo la recepción del mensaje
+5 3 Información, aquí tienes los detalles solicitados
+5 1 Recordatorio, recuerda la reunión de mañana

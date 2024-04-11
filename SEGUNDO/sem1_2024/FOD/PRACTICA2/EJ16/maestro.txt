@@ -1,0 +1,5 @@
+1 10 Honda CBR1000RR@Superbike deportiva@CBR1000RR@Honda
+2 5 Yamaha MT-07@Naked de media cilindrada@MT-07@Yamaha
+3 8 Harley-Davidson Iron 883@Custom cruiser@Iron 883@Harley-Davidson
+4 3 Kawasaki Ninja ZX-6R@Sportbike de 600cc@Ninja ZX-6R@Kawasaki
+5 6 Suzuki GSX-R750@Superbike de 750cc@GSX-R750@Suzuki

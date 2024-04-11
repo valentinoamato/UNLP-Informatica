@@ -1,0 +1,18 @@
+101 01 001 14 La Plata@City Bell@Hospital Universitario@2024-04-01
+101 01 002 18 La Plata@City Bell@Hospital General@2024-04-02
+101 02 009 20 La Plata@Villa Elisa@Hospital Psiquiátrico@2024-04-01
+101 02 010 15 La Plata@Villa Elisa@Hospital Geriátrico@2024-04-02
+101 01 003 10 La Plata@Los Hornos@Hospital Infantil@2024-04-01
+101 01 004 12 La Plata@Los Hornos@Hospital Pediátrico@2024-04-02
+101 04 011 18 La Plata@Ringuelet@Hospital de la Comunidad@2024-04-01
+101 04 012 12 La Plata@Ringuelet@Hospital de Traumatología@2024-04-02
+104 05 005 22 Quilmes@Quilmes@Hospital del Sur@2024-04-01
+104 05 006 28 Quilmes@Quilmes@Hospital del Este@2024-04-02
+104 05 013 10 Quilmes@Quilmes@Hospital del Norte@2024-04-01
+104 05 014 8 Quilmes@Quilmes@Hospital del Oeste@2024-04-02
+104 06 015 25 Quilmes@Ezpeleta@Hospital del Este@2024-04-01
+104 06 016 30 Quilmes@Ezpeleta@Hospital del Sur@2024-04-02
+104 07 007 16 Quilmes@Quilmes Oeste@Hospital de la Costa@2024-04-01
+105 02 008 35 Berazategui@Berazategui Centro@Hospital Municipal@2024-04-02
+105 03 017 18 Berazategui@Ranelagh@Hospital Materno-Infantil@2024-04-01
+105 03 018 22 Berazategui@Ranelagh@Hospital de Alta Complejidad@2024-04-02

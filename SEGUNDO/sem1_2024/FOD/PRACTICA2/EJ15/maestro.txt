@@ -1,0 +1,8 @@
+2024 1 1 1 5.50 500 80 ElEjemplar@Diario local de noticias
+2024 1 1 2 2.75 650 120 LaGaceta@Periódico nacional de actualidad
+2024 1 2 1 5.50 400 80 ElEjemplar@Diario local de noticias
+2024 1 2 2 2.75 350 120 LaGaceta@Periódico nacional de actualidad
+2024 1 3 3 8.99 800 160 Noticias24@Portal de noticias en línea
+2024 1 3 4 9.50 480 150 ElDiario@Periódico regional de opinión
+2024 1 4 3 8.99 400 160 Noticias24@Portal de noticias en línea
+2024 1 4 4 9.50 380 150 ElDiario@Periódico regional de opinión

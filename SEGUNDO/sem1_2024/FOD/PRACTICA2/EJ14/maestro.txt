@@ -1,0 +1,10 @@
+1 1 18 12 2 4 6 Buenos Aires@La Plata
+1 2 24 6 15 3 7 Buenos Aires@Mar del Plata
+2 1 12 9 4 5 9 Córdoba@Córdoba Capital
+2 2 9 3 4 4 12 Córdoba@Villa María
+3 1 21 15 12 6 3 Santa Fe@Rosario
+3 2 15 6 9 4 6 Santa Fe@Santa Fe Capital
+4 1 27 18 9 6 15 Mendoza@Mendoza Capital
+4 2 6 4 6 2 3 Mendoza@San Rafael
+5 1 15 9 12 6 9 Salta@Salta Capital
+5 2 9 6 1 2 6 Salta@Cafayate

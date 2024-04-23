@@ -208,6 +208,42 @@ public class GeneralTree<T>{
 		System.out.println();
 	}
 	
+	public void imprimirNivelesConSeparadores() {
+		Queue<GeneralTree<T>> queue = new Queue<GeneralTree<T>>();
+		Queue<Integer> levelQueue =  new Queue<Integer>();
+		queue.enqueue(this);
+		levelQueue.enqueue(0);
+		GeneralTree<T> aux;
+		int levelAux;
+		int level = -1;
+		boolean separador = true;
+		
+		while (!queue.isEmpty()) {
+			aux = queue.dequeue();
+			if (aux == null) {
+				System.out.print(" -");
+			} else {
+			
+				levelAux = levelQueue.dequeue();
+				if (level!=levelAux) {
+					System.out.print("\nL-"+levelAux+": ");
+					level=levelAux;
+				}
+				System.out.print(" "+aux.getData().toString());
+				for (GeneralTree<T> child: aux.getChildren()) {
+					separador = false;
+					queue.enqueue(child);
+					levelQueue.enqueue(levelAux+1);
+				}
+				if (!separador) {
+					queue.enqueue(null);
+					separador = true;
+				}
+		}
+		}
+		System.out.println();
+	}
+	
 	private boolean esAncestro(GeneralTree<T> arbol,T b) {
 		boolean ancestro = false;
 		if (!arbol.isEmpty()) {
@@ -248,6 +284,43 @@ public class GeneralTree<T>{
 			lista.add(0, this.getData());
 		}
 		return lista;
+	}
+	
+	public boolean esCreciente() {
+		boolean creciente = true;
+		Queue<GeneralTree<T>> queue = new Queue<GeneralTree<T>>();
+		Queue<Integer> levelQueue =  new Queue<Integer>();
+		queue.enqueue(this);
+		levelQueue.enqueue(0);
+		GeneralTree<T> aux;
+		int levelAux;
+		int level = 0;
+		int anchoAnterior = 0;
+		int ancho = -1;
+		
+		while (!queue.isEmpty()) {
+			ancho++;
+			aux = queue.dequeue();
+			levelAux = levelQueue.dequeue();
+			if (level!=levelAux) {
+				if (ancho != anchoAnterior+1) {
+					creciente = false;
+					break;
+				}
+				anchoAnterior=ancho;
+				ancho=0;
+				level=levelAux;
+			}
+			for (GeneralTree<T> child: aux.getChildren()) {
+				queue.enqueue(child);
+				levelQueue.enqueue(levelAux+1);
+			}
+		}
+		if ((creciente) && (ancho!=anchoAnterior)) {
+			creciente = false;
+		}
+
+		return creciente;
 	}
 	
 }

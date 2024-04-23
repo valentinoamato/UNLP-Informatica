@@ -12,6 +12,7 @@ public class Ej2 {
 		GeneralTree<Integer> tree = GeneralTree.randomTree(12);
 		List<Integer> list = new LinkedList<Integer>();
 		tree.imprimirNiveles();
+		tree.imprimirNivelesConSeparadores();
 		System.out.println("Numeros impares mayores que 20: ");
 		
 		list = RecorridosAG.numerosImparesMayoresQuePreOrden(tree, 20);

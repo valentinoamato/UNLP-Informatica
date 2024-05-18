@@ -1,0 +1,2 @@
+Algunas operaciones se ejecutan en tiempo constante porque consisten en acceder
+a un elemento en un indice especifico de un array como set() o get() o a un campo de un header como size() o isEmpty(). Otras requieren recorrer el array, como contains() o indexOf(), y por lo tanto tienen un tiempo de ejecucion lineal.

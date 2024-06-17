@@ -1,0 +1,8 @@
+[package]
+name = "ej4_5"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+chrono = "0.4"
+rand = "0.8.5"

@@ -1,4 +1,6 @@
 program test;
+const 
+    VALORALTO = 9999;
 type 
     tingreso =  record 
         codigo:integer;
@@ -6,26 +8,33 @@ type
         monto:real;
     end;
 
+procedure leer(var ingresos:Text;var aux:tingreso);
+begin 
+    if (not eof(ingresos)) then 
+        readln(ingresos,aux.codigo,aux.monto,aux.nombre)
+    else 
+        aux.codigo:=VALORALTO;
+end;
+
 procedure comprimir();
 var 
     ingresos:Text;
     comprimido:Text;
-    leer,acumular:tingreso;
+    aux,acumular:tingreso;
 begin 
     assign(ingresos,'ingresos.txt');
     assign(comprimido,'comprimido.txt');
     reset(ingresos);
     rewrite(comprimido);
-
-    readln(ingresos,leer.codigo,leer.monto,leer.nombre);
-    while (not eof(ingresos)) do 
+    leer(ingresos,aux);
+    while (aux.codigo<>VALORALTO) do 
         begin
-            acumular:=leer;
+            acumular:=aux;
             acumular.monto:= 0;
-            while (leer.codigo=acumular.codigo) and (not eof(ingresos)) do 
+            while (aux.codigo=acumular.codigo) do 
                 begin 
-                    acumular.monto:=acumular.monto+leer.monto;
-                    readln(ingresos,leer.codigo,leer.monto,leer.nombre);
+                    acumular.monto:=acumular.monto+aux.monto;
+                    leer(ingresos,aux);
                 end;
             writeln(comprimido,acumular.codigo,' ',acumular.monto:0:2,acumular.nombre);
         end;

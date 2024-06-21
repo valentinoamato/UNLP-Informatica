@@ -4,6 +4,7 @@ uses sysutils;
 
 const 
     VALORALTO=9999;
+    MAX_CASOS = 30;
 
 type 
     tmaestro =  record 
@@ -15,6 +16,11 @@ type
         nombreLoc:string;
         nombreMun:string;
         nombreHos:string;
+    end;
+
+    tcasos = record
+        localidad:integer;
+        municipio:integer;
     end;
 
 procedure leer(var maestro:Text;var reg:tmaestro);
@@ -47,71 +53,65 @@ begin
         end
     else 
         begin
-            reg.municipio:=VALORALTO;
             reg.localidad:=VALORALTO;
-            reg.hospital:=VALORALTO;
         end;
 end;
 
 procedure reportar(var maestro:Text);
-type 
-    tcasos = record
-        localidad:integer;
-        municipio:integer;
-    end;
-
 var 
-    reg:tmaestro;
-    casos,actual:tcasos;
-    localidad:integer;
+    aux,actual:tmaestro;
+    casos:tcasos;
     municipios:Text;
-    crear:boolean;
 begin 
-    crear:=True;
-
     reset(maestro);
-    leer(maestro,reg);
+    leer(maestro,aux);
+
+    assign(municipios,'municipios.txt');
+    rewrite(municipios);
     
     casos.localidad:=0;
     casos.municipio:=0;
 
-    actual.localidad:=reg.localidad;
-    actual.municipio:=reg.municipio;
+    actual:=aux;
+    actual.casos:=0;
 
-    while (reg.localidad<>VALORALTO) do 
+    while (aux.localidad<>VALORALTO) do 
         begin 
-            if (casos.localidad=0) and (casos.municipio=0) then 
-                begin
-                    writeln;
-                    writeln('Localidad: ',reg.nombreLoc,'.');
-                end;
-            if (casos.municipio=0) then 
-                begin
-                    writeln;
-                    writeln('   Municipio: ',reg.nombreMun,'.');
-                end;
-
-            writeln('       Hospital: ',reg.nombreHos,', Casos=',reg.casos);
-            casos.municipio:=casos.municipio+reg.casos;
-            leer(maestro,reg);
-
-            if (reg.municipio<>actual.municipio) or (reg.localidad<>actual.localidad) then
+            writeln;
+            writeln('Localidad: ',actual.nombreLoc,'.');
+            while (aux.localidad=actual.localidad) do 
                 begin 
+                    writeln;
+                    writeln('   Municipio: ',actual.nombreMun,'.');
+                    while (aux.localidad=actual.localidad) and (aux.municipio=actual.municipio) do 
+                        begin 
+                            while (aux.localidad=actual.localidad) and (aux.municipio=actual.municipio) and (aux.hospital=actual.hospital) do 
+                                begin 
+                                    actual.casos:=actual.casos+aux.casos;
+                                    leer(maestro,aux);
+                                end;
+                            writeln('       Hospital: ',actual.nombreHos,', Casos=',actual.casos);
+                            casos.municipio:=casos.municipio+actual.casos;
+                            actual.casos:=0;
+                            actual.hospital:=aux.hospital;
+                            actual.nombreHos:=aux.nombreHos;
+                        end;
                     writeln('   Casos del municipio: ',casos.municipio,'.');
+                    if (casos.municipio>MAX_CASOS) then 
+                        writeln(municipios,actual.nombreLoc,' ',actual.nombreMun,' ',casos.municipio);
                     casos.localidad:=casos.localidad+casos.municipio;
                     casos.municipio:=0;
-                    actual.municipio:=reg.municipio;
+                    actual.municipio:=aux.municipio;
+                    actual.nombreMun:=aux.nombreMun;
                 end;
-
-            if (reg.localidad<>actual.localidad) then 
-                begin 
-                    writeln('Casos de la localidad: ',casos.localidad,'.');
-                    casos.localidad:=0;
-                    actual.localidad:=reg.localidad;
-                end;
+            writeln('Casos de la localidad: ',casos.localidad,'.');
+            casos.localidad:=0;
+            actual.localidad:=aux.localidad;
+            actual.nombreLoc:=aux.nombreLoc;
         end;
     writeln;
     close(maestro);
+    close(municipios);
 end;
 
 var 

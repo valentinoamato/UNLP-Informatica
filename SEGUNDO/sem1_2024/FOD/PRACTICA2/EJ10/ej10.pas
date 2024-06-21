@@ -14,8 +14,14 @@ type
         horas:integer;
     end;
 
-var 
-    valores:  array [1..15] of real;
+    tvalores = array [1..15] of real;
+
+    tacum = record 
+        horasDiv:integer;
+        montoDiv:real;
+        horasDep:integer;
+        montoDep:real;
+    end;
 
 procedure leer(var maestro:Text;var reg:tmaestro);
 begin 
@@ -31,12 +37,10 @@ begin
     else 
         begin
             reg.departamento:=VALORALTO;
-            reg.division:=VALORALTO;
-            reg.empleado:=VALORALTO;
         end;
 end;
 
-procedure cargarValores(var archivoValores:Text);
+procedure cargarValores(var archivoValores:Text;var valores:tvalores);
 var 
     indice:integer;
     valor:real;
@@ -50,78 +54,48 @@ begin
     close(archivoValores);
 end; 
 
-function getMonto(categoria,cantidad:integer):real;
-begin 
-    getMonto:=valores[categoria]*cantidad;
-end;
-
-procedure reportar(var maestro:Text);
-type 
-    thoras = record
-        division:integer;
-        departamento:integer;
-    end;
-    tmonto =  record 
-        division:real;
-        departamento:real;
-    end;
+procedure reportar(var maestro:Text;valores:tvalores);
 var 
-    reg:tmaestro;
-    horas,actual:thoras;
-    monto:tmonto;
+    aux,actual:tmaestro;
+    acum:tacum; //acumulador
+    monto:real;
 begin 
     reset(maestro);
-    leer(maestro,reg);
+    leer(maestro,aux);
     
-    horas.division:=0;
-    horas.departamento:=0;
-    
-    monto.division:=0;
-    monto.departamento:=0;
+    acum.horasDep:=0;
+    acum.horasDiv:=0;
+    acum.montoDep:=0;
+    acum.montoDiv:=0;
+    actual.division:=aux.division;
+    actual.departamento:=aux.departamento;
 
-    actual.division:=reg.division;
-    actual.departamento:=reg.departamento;
-
-    while (reg.departamento<>VALORALTO) do 
+    while (aux.departamento<>VALORALTO) do 
         begin 
-            if (horas.departamento=0) and (horas.division=0) then 
-                begin
-                    writeln;
-                    writeln('Departamento N',reg.departamento,'.');
-                end;
-            if (horas.division=0) then 
-                begin
-                    writeln;
-                    writeln('Division N',reg.division,'.');
-                end;
-
-            writeln('Empleado N',reg.empleado,', Horas=',reg.horas,', Monto=',getMonto(reg.categoria,reg.horas):0:2);
-            horas.division:=horas.division+reg.horas;
-            monto.division:=monto.division+getMonto(reg.categoria,reg.horas);
-            leer(maestro,reg);
-
-            if (reg.division<>actual.division) or (reg.departamento<>actual.departamento) then
+            writeln;
+            writeln('Departamento ',aux.departamento,'.');
+            while (actual.departamento=aux.departamento) do 
                 begin 
-                    writeln('Total de horas division: ',horas.division,'.');
-                    writeln('Monto total por division: ',monto.division:0:2,'.');
-                    horas.departamento:=horas.departamento+horas.division;
-                    monto.departamento:=monto.departamento+monto.division;
-                    horas.division:=0;
-                    monto.division:=0;
-                    actual.division:=reg.division;
+                    writeln('   Division ',aux.division,'.');
+                    while (actual.departamento=aux.departamento) and (actual.division=aux.division) do 
+                        begin 
+                            monto:=(valores[aux.categoria]*aux.horas);
+                            writeln('       - Empleado=',aux.empleado,', Horas=',aux.horas,', Monto=',monto:0:2,'.');
+                            acum.horasDiv:=acum.horasDiv+aux.horas;
+                            acum.montoDiv:=acum.montoDiv+monto;
+                            leer(maestro,aux);
+                        end;
+                    writeln('   Horas Division=',acum.horasDiv,', Monto Division=',acum.montoDiv:0:2,'.');
+                    acum.horasDep:=acum.horasDep+acum.horasDiv;
+                    acum.montoDep:=acum.montoDep+acum.montoDiv;
+                    acum.horasDiv:=0;
+                    acum.montoDiv:=0;
+                    actual.division:=aux.division;
                 end;
-
-            if (reg.departamento<>actual.departamento) then 
-                begin 
-                    writeln('Total horas departamento: ',horas.departamento,'.');
-                    writeln('Monto total departamento: ',monto.departamento:0:2,'.');
-                    horas.departamento:=0;
-                    monto.departamento:=0;
-                    horas.division:=0;
-                    monto.division:=0;
-                    actual.division:=reg.division;
-                    actual.departamento:=reg.departamento;
-                end;
+            writeln('Horas Departamento=',acum.horasDep,', Monto Departamento=',acum.montoDep:0:2,'.');
+            acum.horasDep:=0;
+            acum.montoDep:=0;
+            actual.departamento:=aux.departamento;
         end;
     writeln;
     close(maestro);
@@ -130,10 +104,11 @@ end;
 var 
     maestro:Text;
     archivoValores:Text;
+    valores:tvalores;
 begin 
     assign(archivoValores,'valores.txt');
-    cargarValores(archivoValores);
+    cargarValores(archivoValores,valores);
 
     assign(maestro,'maestro.txt');
-    reportar(maestro);
+    reportar(maestro,valores);
 end.

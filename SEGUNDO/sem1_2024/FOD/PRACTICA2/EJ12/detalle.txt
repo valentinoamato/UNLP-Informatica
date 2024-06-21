@@ -12,13 +12,13 @@
 3 1 Confirmación, confirma tu asistencia
 3 2 Solicitud, por favor, envía el documento firmado
 3 4 Solicitud, por favor, revisa este documento
-4 5 Urgente, por favor, responde cuanto antes
-4 2 Recordatorio, recuerda enviar el informe
-4 3 Notificación, notificación sobre el evento
-4 1 Recordatorio, recuerda la fecha límite
-4 5 Confirmación, confirmo la recepción del mensaje
-5 1 Solicitud, necesito tu ayuda con un proyecto
-5 4 Respuesta, aquí tienes la información solicitada
-5 2 Confirmación, confirmo la recepción del mensaje
-5 3 Información, aquí tienes los detalles solicitados
-5 1 Recordatorio, recuerda la reunión de mañana
+5 5 Urgente, por favor, responde cuanto antes
+5 2 Recordatorio, recuerda enviar el informe
+5 3 Notificación, notificación sobre el evento
+5 1 Recordatorio, recuerda la fecha límite
+5 5 Confirmación, confirmo la recepción del mensaje
+6 1 Solicitud, necesito tu ayuda con un proyecto
+6 4 Respuesta, aquí tienes la información solicitada
+6 2 Confirmación, confirmo la recepción del mensaje
+6 3 Información, aquí tienes los detalles solicitados
+6 1 Recordatorio, recuerda la reunión de mañana

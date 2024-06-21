@@ -2,4 +2,5 @@
 2 3201.25 Maria Lopez
 3 3300.25 Carlos Garcia
 4 1600.80 Ana Rodriguez
-5 3101.15 Luis Hernandez
+5 3851.40 Luis Hernandez
+6 125.30 Carlos Juez

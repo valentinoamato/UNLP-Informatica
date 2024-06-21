@@ -90,7 +90,10 @@ begin
                     leer(detalle,regd);
                 end;
             while (regm.codigo<>codigo) do 
-                read(maestro,regm);
+                begin 
+                    writeln(listado,'Numero de usuario: ',regm.codigo,', Cantidad de mensajes enviados: ',0,'.');            
+                    read(maestro,regm);
+                end;
             writeln(listado,'Numero de usuario: ',regm.codigo,', Cantidad de mensajes enviados: ',cant,'.');
             regm.enviados:=regm.enviados+cant;
             seek(maestro,filepos(maestro)-1);
@@ -98,6 +101,13 @@ begin
             if (not eof(maestro)) then 
                 read(maestro, regm);
         end;
+    while (not eof(maestro)) do 
+        begin
+            writeln(listado,'Numero de usuario: ',regm.codigo,', Cantidad de mensajes enviados: ',0,'.');     
+            read(maestro,regm);
+        end;       
+    writeln(listado,'Numero de usuario: ',regm.codigo,', Cantidad de mensajes enviados: ',0,'.');     
+        
     close(detalle);
     close(maestro);
     close(listado);

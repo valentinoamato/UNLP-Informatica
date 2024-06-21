@@ -194,7 +194,7 @@ begin
                     minimo(min);
                 end;
 
-            while (regm.codLocalidad<>actual.codLocalidad) and (regm.codCepa<>actual.codCepa) do 
+            while (regm.codLocalidad<>actual.codLocalidad) or (regm.codCepa<>actual.codCepa) do 
                 begin
                     read(maestro,regm);
                 end;

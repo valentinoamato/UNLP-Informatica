@@ -13,6 +13,11 @@ type
         votos:integer;
     end;
 
+    tvotos = record 
+        provincia:integer;
+        pais:integer;
+    end;
+
 procedure leer(var maestro:Text;var reg:tmaestro);
 begin 
     if (not eof(maestro)) then 
@@ -26,67 +31,48 @@ begin
     else 
         begin
             reg.provincia:=VALORALTO;
-            reg.localidad:=VALORALTO;
         end;
 end;
 
 
 procedure reportar(var maestro:Text);
-type 
-    ttotal = record
-        localidad:integer;
-        provincia:integer;
-        pais:integer;
-    end;
-    tactual = record 
-        localidad:integer;
-        provincia:integer;
-    end;
 var 
-    reg:tmaestro;
-    total:ttotal;
-    actual:tactual;
+    reg,actual:tmaestro;
+    votos:tvotos;
 begin 
     reset(maestro);
     leer(maestro,reg);
     
-    total.localidad:=0;
-    total.provincia:=0;
-    total.pais:=0;
+    votos.provincia:=0;
+    votos.pais:=0;
 
-    actual.localidad:=reg.localidad;
-    actual.provincia:=reg.provincia;
+    actual:=reg;
+    actual.votos:=0;
 
     while (reg.provincia<>VALORALTO) do 
         begin 
-            if (total.provincia=0) and (total.localidad=0) then 
-                begin
-                    writeln;
-                    writeln('Provincia N',reg.provincia,':');
-                end;
-            total.localidad:=total.localidad+reg.votos;
-            leer(maestro,reg);
-
-            if (reg.localidad<>actual.localidad) then
+            writeln;
+            writeln('Provincia: ',actual.provincia,'.');
+            while (reg.provincia=actual.provincia) do 
                 begin 
-                    writeln('Localidad N',actual.localidad,': ',total.localidad,'.');
-                    total.provincia:=total.provincia+total.localidad;
-                    total.localidad:=0;
-                    actual.localidad:=reg.localidad;
+                    while (reg.provincia=actual.provincia) and (reg.localidad=actual.localidad) do 
+                        begin 
+                            actual.votos:=actual.votos+reg.votos;
+                            leer(maestro,reg);
+                        end;
+                        writeln('Localidad: ',actual.localidad,', Votos: ',actual.votos,'.');
+                        votos.provincia:=votos.provincia+actual.votos;
+                        actual.localidad:=reg.localidad;
+                        actual.votos:=0;
                 end;
-
-            if (reg.provincia<>actual.provincia) then 
-                begin 
-                    writeln('Total de Votos Provincia: ',total.provincia,'.');
-                    total.pais:=total.pais+total.provincia;
-                    total.localidad:=0;
-                    total.provincia:=0;
-                    actual.localidad:=reg.localidad;
-                    actual.provincia:=reg.provincia;
-                end;
+                writeln('Total de Votos Provincia:', votos.provincia);
+                votos.pais:=votos.pais+votos.provincia;
+                votos.provincia:=0;
+                actual.provincia:=reg.provincia;
         end;
     writeln;
-    writeln('Total General de Votos: ',total.pais);
+    writeln('Total General de Votos: ',votos.pais);
+    close(maestro);                    
 end;
 
 var 

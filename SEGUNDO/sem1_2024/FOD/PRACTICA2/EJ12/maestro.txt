@@ -1,5 +1,8 @@
 1 10 jdoe John Doe
 2 8 asmith Alice Smith
 3 7 bwilliams Bob Williams
-4 9 cjones Carol Jones
-5 11 djohnson David Johnson
+4 5 Martha Stuart
+5 9 cjones Carol Jones
+6 11 djohnson David Johnson
+7 5 pepox Pedro Ximbal
+8 3 hjuan Juan Hulu

@@ -1,5 +1,8 @@
 Numero de usuario: 1, Cantidad de mensajes enviados: 5.
 Numero de usuario: 2, Cantidad de mensajes enviados: 5.
 Numero de usuario: 3, Cantidad de mensajes enviados: 4.
-Numero de usuario: 4, Cantidad de mensajes enviados: 5.
+Numero de usuario: 4, Cantidad de mensajes enviados: 0.
 Numero de usuario: 5, Cantidad de mensajes enviados: 5.
+Numero de usuario: 6, Cantidad de mensajes enviados: 5.
+Numero de usuario: 7, Cantidad de mensajes enviados: 0.
+Numero de usuario: 8, Cantidad de mensajes enviados: 0.

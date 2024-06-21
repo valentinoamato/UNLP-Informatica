@@ -29,9 +29,14 @@ type
 
     tbin = file of tmaestro;
 
-var 
-    detalles: array [1..DIMF] of text;
-    registros: array [1..DIMF] of tdetalle;
+    tdetalles = array [1..DIMF] of text; 
+    tregistros = array [1..DIMF] of tdetalle;
+
+    tminimo =  record 
+        indice:integer;
+        provincia:integer;
+        localidad:integer;
+    end;
 
 
 procedure leer(var det:Text;var regd:tdetalle);
@@ -114,18 +119,25 @@ begin
     close(bin);
 end;
 
-procedure inicializarDetalles();
+procedure inicializarDetalles(var detalles:tdetalles);
 var 
     i:integer;
 begin 
     for i:=1 to DIMF do 
         begin
             assign(detalles[i],'detalles/detalle'+i.tostring()+'.txt');
-            reset(detalles[i]);
         end;
 end;
 
-procedure cerrarDetalles();
+procedure resetearDetalles(var detalles:tdetalles);
+var 
+    i:integer;
+begin 
+    for i:=1 to DIMF do 
+        reset(detalles[i]);
+end;
+
+procedure cerrarDetalles(var detalles:tdetalles);
 var 
     i:integer;
 begin 
@@ -133,7 +145,7 @@ begin
         close(detalles[i]);
 end;
 
-procedure cargarRegistros();
+procedure cargarRegistros(var registros:tregistros;var detalles:tdetalles);
 var 
     i:integer;
 begin 
@@ -143,13 +155,7 @@ begin
         end;
 end;
 
-procedure minimo(var min:tdetalle);
-type 
-    tminimo =  record 
-        indice:integer;
-        provincia:integer;
-        localidad:integer;
-    end;
+procedure minimo(var min:tdetalle;var registros:tregistros;var detalles:tdetalles);
 var 
     minimo:tminimo;
     i:integer;
@@ -170,7 +176,7 @@ begin
     leer(detalles[minimo.indice],registros[minimo.indice]);
 end;
 
-procedure actualizar(var maestro:tbin);
+procedure actualizar(var maestro:tbin;var registros:tregistros;var detalles:tdetalles);
 var 
     regm:tmaestro;
     cant:integer;
@@ -179,10 +185,11 @@ begin
     cant:=0;
 
     reset(maestro);
+    resetearDetalles(detalles);
     read(maestro,regm);
 
-    cargarRegistros();
-    minimo(min);
+    cargarRegistros(registros,detalles);
+    minimo(min,registros,detalles);
 
     while (min.codProv<>VALORALTO) do 
         begin
@@ -201,10 +208,10 @@ begin
                     actual.chapa:=actual.chapa+min.chapa;
                     actual.agua:=actual.agua+min.agua;
                     actual.sanitarios:=actual.sanitarios+min.sanitarios;
-                    minimo(min);
+                    minimo(min,registros,detalles);
                 end;
 
-            while (regm.codProv<>actual.codProv) and (regm.codLoc<>actual.codLoc) do 
+            while (regm.codProv<>actual.codProv) or (regm.codLoc<>actual.codLoc) do 
                 begin
                     if (regm.chapa=0) then 
                         cant:=cant+1;
@@ -224,6 +231,7 @@ begin
                 read(maestro, regm);
         end;
     close(maestro);
+    cerrarDetalles(detalles);
     writeln;
     writeln('Actualizacion realizada con exito.');
     if (cant>0) then 
@@ -233,11 +241,12 @@ end;
 var 
     maestro:Text;
     bin:tbin;
+    registros:tregistros;
+    detalles:tdetalles;
 begin 
     textToBin(maestro,bin);
     imprimirBin(bin);
-    inicializarDetalles();
-    actualizar(bin);
+    inicializarDetalles(detalles);
+    actualizar(bin,registros,detalles);
     imprimirBin(bin);
-    cerrarDetalles();
 end.

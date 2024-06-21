@@ -178,7 +178,6 @@ var
     regm,menosVentas,maximo:tmaestro;
     min,actual:tdetalle;    
 begin 
-    writeln('bo1');
     maximo.vendidos:=VALORBAJO;
     menosVentas.vendidos:=VALORALTO;
 
@@ -202,9 +201,9 @@ begin
                     minimo(min);
                 end;
 
-            while (regm.anno<>actual.anno) and 
-                  (regm.mes<>actual.mes) and 
-                  (regm.dia<>actual.dia) and 
+            while (regm.anno<>actual.anno) or 
+                  (regm.mes<>actual.mes) or 
+                  (regm.dia<>actual.dia) or 
                   (regm.codigo<>actual.codigo) do 
                 begin 
                     read(maestro,regm);
@@ -236,9 +235,7 @@ var
     maestro:Text;
     bin:tbin;
 begin 
-    writeln('bo-1');
     textToBin(maestro,bin);
-    writeln('bo0');
     imprimirBin(bin);
     inicializarDetalles();
     actualizar(bin);

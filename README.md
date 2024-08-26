@@ -13,3 +13,8 @@ Este repositorio contiene resoluciones de trabajos practicos de la carrera Licen
      * [Algoritmos y Estructuras de Datos](https://github.com/valentinoamato/UNLP-Informatica/tree/main/SEGUNDO/sem1_2024/AED)
      * [Fundamentos de Organizacion de Datos](https://github.com/valentinoamato/UNLP-Informatica/tree/main/SEGUNDO/sem1_2024/FOD)
      * [Seminario de Lenguajes: Rust](https://github.com/valentinoamato/UNLP-Informatica/tree/main/SEGUNDO/sem1_2024/RUST)
+   * [Segundo Semestre](https://github.com/valentinoamato/UNLP-Informatica/tree/main/SEGUNDO/sem2_2024)
+     * [Diseño de Bases de Datos](https://github.com/valentinoamato/UNLP-Informatica/tree/main/SEGUNDO/sem2_2024/DBD)
+     * [Ingenieria de Software 1](https://github.com/valentinoamato/UNLP-Informatica/tree/main/SEGUNDO/sem2_2024/ING1)
+     * [Orientacion a Objetos 1](https://github.com/valentinoamato/UNLP-Informatica/tree/main/SEGUNDO/sem2_2024/OO1)
+     * [Introduccion a los Sistemas Operativos](https://github.com/valentinoamato/UNLP-Informatica/tree/main/SEGUNDO/sem2_2024/ISO)

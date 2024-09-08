@@ -38,3 +38,49 @@ pasa un empleado indicando una breve descripción de las funciones en esa área.
 debe poder determinar el orden en que fue rotando de área. Discuta al menos tres
 soluciones diferentes para resolver el ejercicio.
 ![ej5](./5.jpeg)
+
+6. Se debe modelar la información para un club donde se realizan diversos deportes. De
+cada deportista se registra: DNI, apellido, nombre, fecha de nacimiento,mail, teléfonos, fecha
+de ingreso al club, deportes que desea realizar (un deportista puede desarrollar varios
+deportes). De los deportes se registra un nombre único y descripción asociada. Información del
+representante (en caso de que tuviera, sólo interesa DNI, el nombre, apellido y mail).
+Además resulta necesario almacenar información sobre las lesiones que ha tenido en toda su
+carrera como deportista (en caso que tuviera interesa conocer: tipo de lesión, fecha en que
+sucedió la lesión y tiempo de rehabilitación). Nota: se podrían pedir estadísticas de tipos de
+lesiones más comunes en determinado deporte, discuta la mejor solución
+![ej6](./6.jpeg)
+
+7. Modelar la información necesaria para una bicicletería que brinda servicio de alquiler de
+bicicletas. Existen clientes que pueden alquilar bicicletas de forma temporal. De los clientes se
+registra número único de cliente, nombre, apellido, fecha de nacimiento y domicilio. Existen
+diferentes tipos de bicicletas para alquiler. Del alquiler se debe registrar: la bicicleta alquilada,
+el cliente y la fecha de comienzo y finalización del alquiler. Cada bicicleta tiene un número
+único asociado, el tipo de bicicleta y una descripción. De los tipos de bicicletas se registra el
+nombre correspondiente (el nombre del tipo de bicicletas no se repite) y una descripción.
+![ej7](./7.jpeg)
+
+8. Se debe modelar la información necesaria para una agencia de turismo que vende
+pasajes aéreos. De los clientes se registran: código único de cliente, D.N.I, nombre, apellido,
+nacionalidad y fecha de nacimiento. Los clientes compran los pasajes aéreos para vuelos a
+diferentes destinos. De cada vuelo se registra ciudad origen, ciudad destino, fecha y hora de
+salida y fecha y hora de llegada, aerolínea y un número de vuelo asociado. El número de vuelo
+se puede reutilizar en diferentes días de salida (es decir se repite en diferentes fechas).
+Cada pasaje se caracteriza por número de fila y butaca y el vuelo al que corresponde.
+Cuando se vende un pasaje se debe dejar registro del cliente que realizó la compra
+correspondiente.
+![ej8](./8.jpeg)
+
+9. Se debe modelar la información de una casa de electrodomésticos. La misma registra
+información sobre sus empleados y clientes. De cada empleado se registra D.N.I, C.U.I.L,
+nombre, apellido, fecha de nacimiento, fecha de ingreso, fecha de egreso, email/s y sueldo
+básico. De los clientes se registra: D.N.I, nombre, apellido y, opcionalmente, teléfono y
+dirección de mail. También se dispone de información sobre los electrodomésticos a la venta.
+De cada uno se registra un código interno único, nombre, modelo, stock, precio regular y
+precio online (si está disponible). Cada electrodoméstico pertenece a una categoría
+(climatización, lavado, cocina, etc. El nombre de la categoría es único). Es importante registrar
+las ventas realizadas. De cada venta se registra: código de venta (único), fecha, cliente,
+electrodomésticos incluidos, precio total y el empleado que realizó dicha venta. Nota: tenga en
+cuenta que se podrían pedir estadísticas sobre mejor o peor cliente, tipos de
+electrodomésticos más vendidos, promedios de ventas por clientes entre otros, discuta
+la mejor solución
+![ej9](./9.jpeg)

@@ -8,10 +8,12 @@ import java.util.List;
 public class Ticket {
     private LocalDate fecha;
     private List<Producto> productos;
+    private double precioTotal;
 
     public Ticket(List<Producto> productos) {
         this.fecha = LocalDate.now();
         this.productos = productos;
+        this.precioTotal =  this.productos.stream().mapToDouble(producto->producto.getPrecio()).sum();
     }
 
     public LocalDate getFecha() {
@@ -23,7 +25,7 @@ public class Ticket {
     }
 
     public double getPrecioTotal() {
-        return productos.stream().mapToDouble(producto->producto.getPrecio()).sum();
+        return this.precioTotal;
     }
 
     public double getPesoTotal() {

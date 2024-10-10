@@ -30,7 +30,7 @@ public class Farola {
     * Retorna sus farolas vecinas
     */
     public List<Farola> getNeighbors () {
-        return this.vecinos;
+        return new LinkedList<Farola>(this.vecinos);
     }
 
     /*

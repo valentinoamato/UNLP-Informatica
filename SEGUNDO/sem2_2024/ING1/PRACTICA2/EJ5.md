@@ -3,7 +3,7 @@
 #### ID: 
 `Registrar persona.`
 #### Titulo:
-`Como persona quiero registrarme en el sistema para comprar bebidas alcoholicas.`
+`Como persona quiero registrarme en el sistema para comprar subir fotos.`
 
 #### Criterios de aceptacion:
 ##### Escenario 1: Registro exitoso.

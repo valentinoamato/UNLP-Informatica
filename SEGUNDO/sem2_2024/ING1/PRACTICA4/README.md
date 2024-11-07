@@ -1,0 +1,24 @@
+## 1
+![diagrama 1](./diagramas/1.jpeg)
+## 2
+![diagrama 2](./diagramas/2.jpeg)
+## 3
+La diferencia entre los dos diagramas es que en el primero se modela la verificacion del codigo como un estado y en el segundo no.
+## 4
+![diagrama 4](./diagramas/4.jpeg)
+## 5
+![diagrama 5](./diagramas/5.jpeg)
+## 6
+![diagrama 6](./diagramas/6.jpeg)
+## 7
+![diagrama 7](./diagramas/7.jpeg)
+## 8
+![diagrama 8](./diagramas/8.jpeg)
+## 9
+![diagrama 9](./diagramas/9.jpeg)
+## 10
+![diagrama 10](./diagramas/10.jpeg)
+## 11
+![diagrama 11](./diagramas/11.jpeg)
+## 12
+![diagrama 12](./diagramas/12.jpeg)

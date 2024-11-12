@@ -1,0 +1,3 @@
+DELETE
+FROM Cliente
+WHERE DNI = '22222222';

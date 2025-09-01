@@ -20,5 +20,6 @@ Este repositorio contiene resoluciones de trabajos practicos de la carrera Licen
      * [Introduccion a los Sistemas Operativos](https://github.com/valentinoamato/UNLP-Informatica/tree/main/SEGUNDO/sem2_2024/ISO)
  * [Tercero](https://github.com/valentinoamato/UNLP-Informatica/tree/main/TERCERO)
    * [Segundo semestre](https://github.com/valentinoamato/UNLP-Informatica/tree/main/SEGUNDO/sem2_2025)
-     * [Programacion Concurrente](https://github.com/valentinoamato/UNLP-Informatica/tree/main/SEGUNDO/sem2_2025/PC)
-     * [Redes y Comunicaciones](https://github.com/valentinoamato/UNLP-Informatica/tree/main/SEGUNDO/sem2_2025/REDES)
+     * [Programacion Concurrente](https://github.com/valentinoamato/UNLP-Informatica/tree/main/TERCERO/sem2_2025/PC)
+     * [Redes y Comunicaciones](https://github.com/valentinoamato/UNLP-Informatica/tree/main/TERCERO/sem2_2025/REDES)
+     * [Redictado Orientacion a Objetos 2](https://github.com/valentinoamato/UNLP-Informatica/tree/main/TERCERO/sem2_2025/ROO2)

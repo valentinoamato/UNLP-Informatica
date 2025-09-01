@@ -17,19 +17,19 @@ bool turno[1..n]
 Process SC [i = 1..n] {
     while (true) { 
         turno[i] = true;
-        while (turno =! i) skip;
+        while (actual =! i) skip;
         SC;
-        turno = -1;
+        actual = -1;
     }
 }
 
 Process Cordinador {
     while (true) {
-        while (turno =! -1) skip;
+        while (actual =! -1) skip;
         for (j = 1 to n) {
             if (turno[j] == true) {
                 turno[j] = false;
-                turno = j;
+                actual = j;
                 break;
             }
         }

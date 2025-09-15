@@ -524,6 +524,7 @@ Process Empleado[id: 0..E-1] {
 
 ### 9)
 ```
+//No chequeado
 marco marcos[0..29]; //Marcos
 int iMarcos = 0; //Indice donde insertar el nuevo marco
 int jMarcos = 0; //Indice donde tomar un marco
@@ -594,19 +595,18 @@ Process Armador[id: 1..2] {
 ### 10)
 ##### a)
 ```
-//Esta es una lista de tuplas id-tipo, tiene las siguientes funciones:
-//add() agrega al final
-//get(i) retorna el turno i de la lista
-//delete(i) elimina el elemento i de la lista
-listaTurnos turnos; //Turnos de los camiones
-sem mutexC = 1; //Semaforo de la cola
+listaTurnos turnosT; //Turnos de los camiones de trigo
+listaTurnos turnosM; //Turnos de los camiones de maiz
+sem mutexCT = 1; //Semaforo de la cola de trigo
+sem mutexCM = 1; //Semaforo de la cola de maiz
 
 sem turnosT[0..T-1] = {0 .. 0};
 sem turnosM[0..M-1] = {0 .. 0};
 
 sem lugares = 7; //Lugares disponibles
-sem lugaresTrigo = 5; //Lugares disponibles
-sem lugaresMaiz = 5; //Lugares disponibles
+sem lugaresT = 5; //Lugares disponibles trigo
+sem lugaresM = 5; //Lugares disponibles maiz
+sem esperando = 0; //Camion esprando
 int maiz = 0; //Camiones de maiz descargando
 int trigo = 0; //Camiones de trigo descargando
 int turnosMaiz = 0; //Turnos de maiz
@@ -614,10 +614,11 @@ int turnosTrigo = 0; //Turnos de trigo
 
 
 Process CamionTrigo[id 0..T-1] {
-    P(mutexC); //Saca turno
-    turnos.add((id,"T"));
+    P(mutexCT); //Saca turno
+    turnosT.push(id);
     turnosTrigo++;
-    V(mutexC);
+    V(mutexCT);
+    V(esperando);
 
     P(turnosT[id]); //Espera su turno
     descargar_trigo();
@@ -626,10 +627,11 @@ Process CamionTrigo[id 0..T-1] {
 }
 
 Process CamionMaiz[id 0..M-1] {
-    P(mutexC); //Saca turno
-    turnos.add((id,"M"));
+    P(mutexCM); //Saca turno
+    turnosM.push(id);
     turnosMaiz++;
-    V(mutexC);
+    V(mutexCM);
+    V(esperando);
 
     P(turnosM[id]); //Espera su turno
     descargar_maiz();
@@ -638,82 +640,40 @@ Process CamionMaiz[id 0..M-1] {
 }
 
 Process Coordinador[id: 0] {
-    for i in 1..(T+M) {
-        //ESPERO QUE HAYA LUGAR
-        //TOMO EL PROXIMO TURNO QUE TIENE TIPO A
-        //SI HAY LUGAR PARA EL TIPO A (<5) LE DOY EL TURNO
-        //SI TIPO A NO TIENE LUGAR  Y HAY DEL TIPO B ESPERANDO LE DOY TURNO A TIPO B
-        //SI TIPO A NO TIENE LUGAR Y NO HAY DEL TIPO B ESPERANDO, ESPERO QUE TERMINE TIPO A
+    int cant = 0;
+    while (cant < (T+M)) {
         P(lugares); //Espera que haya lugar
-        (idNext, tipo) = turnos.get(0);
-        if tipo = "T" {//Si el proximo es de trigo
+        P(esperando); //Espera que un camion haya sacado turno
 
-            if (trigo < 5) { //Si hay menos de 5 de trigo descargando
-                turnos.delete(0); //Elimino el turno
-                trigo++;
-                turnosTrigo--;
-                V(turnosT[idNext]); //Despierto al camion
-                P(lugaresTrigo); //No espera
-
-            } else { //Si hay 5 descargando
-                if (turnosMaiz) { //Si hay alguno de maiz esperando
-                    //Busco el turno de maix
-                    int j = 1;
-                    (idTurno, tipoTurno) = turnos.get(1);
-                    while (tipoTurno != "M") {
-                        j++;
-                        (idTurno, tipoTurno) = turnos.get(j);
-                    }
-                    turnos.delete(j); //Elimino el turno
-                    maiz++;
-                    turnosMaiz--;
-                    V(turnosM[idTurno]); //Despierto al camion
-                    P(lugaresMaiz); //No espera
-                } else { //Si no hay maiz esperando
-                    P(lugaresTrigo); //Espero que termine uno de trigo
-                    turnos.delete(0); //Elimino el turno
-                    trigo++;
-                    turnosTrigo--;
-                    V(turnosT[idNext]); //Despierto al camion
-                }
-            }
-        } else { //Si el proximo es de maiz hago lo mismo que arriba pero al revez
-
-            if (maiz < 5) { //Si hay menos de 5 de maiz descargando
-                turnos.delete(0); //Elimino el turno
-                maiz++;
-                turnosMaiz--;
-                V(turnosM[idNext]); //Despierto al camion
-                P(lugaresTrigo); //No espera
-
-            } else { //Si hay 5 descargando
-                if (turnosTrigo) { //Si hay alguno de trigo esperando
-                    //Busco el turno de trigo
-                    int j = 1;
-                    (idTurno, tipoTurno) = turnos.get(1);
-                    while (tipoTurno != "T") {
-                        j++;
-                        (idTurno, tipoTurno) = turnos.get(j);
-                    }
-                    turnos.delete(j); //Elimino el turno
-                    trigo++;
-                    turnosTrigo--;
-                    V(turnosT[idTurno]); //Despierto al camion
-                    P(lugaresTrigo); //No espera
-                } else { //Si no hay trigo esperando
-                    P(lugaresMaiz); //Espero que termine uno de maiz
-                    turnos.delete(0); //Elimino el turno
-                    maiz++;
-                    turnosMaiz--;
-                    V(turnosM[idNext]); //Despierto al camion
-                }
-            }
+        //Si hay espacio para trigo y hay uno esperando
+        if (turnosTrigo > 0) {
+            P(lugaresT);
+            P(mutexCT);
+            idNext = turnosT.pop();
+            trigo++;
+            turnosTrigo--;
+            V(mutexCT);
+            cant++;
+            V(turnosT[idNext]); //Despierto al camion
+            V(esperando);
+        } else {
+            P(lugaresM);
+            P(mutexCM);
+            idNext = turnosM.pop();
+            maiz++;
+            turnosMaiz--;
+            V(mutexCM);
+            cant++;
+            V(turnosM[idNext]); //Despierto al camion
+            V(esperando);
         }
+    }
 }
 ```
 
 ##### b)
 ```
+//No chequeado
 sem lugares = 7; //Lugares disponibles
 sem lugaresTrigo = 5; //Lugares disponibles
 sem lugaresMaiz = 5; //Lugares disponibles
@@ -737,6 +697,7 @@ Process CamionMaiz[id 0..M-1] {
 
 ### 11)
 ```
+//No chequeado
 cola turnos;
 sem mutexC = 1; //Mutex de la cola
 sem llegue = 0; //Avisa la llegada de una persona
@@ -773,6 +734,7 @@ Process Empleado[id: 1] {
 ### 12)
 ##### a)
 ```
+//No chequeado
 sem llegueR = 0; //Llego un pasajero al recepcionista
 sem llegueP[3] = {0,0,0}; //Llego un pasajero al puesto x
 sem retirarse[150] = {0 ... 0}; //Se hisopo al pasajero y se puede retirar
@@ -811,6 +773,7 @@ Process Recepcionista[id: 0] {
         }
         P(mutexP[min]); //Encolo al pasajero en el puesto
         turnosP[min].push(idPasajero);
+        cants[min]++;
         P(mutexP[min]);
         V(llegueP[min]); //Aviso al puesto
     }
@@ -821,6 +784,7 @@ Process Enfermera[id: 0..2] {
         P(llegueP[id]); //Espera que llegue alguien
         P(mutexP[id]); //Toma al proximo pasajero
         idPasajero = turnosP[id].pop();
+        cants[id]--;
         V(mutexP[id]);
 
         Hisopar();
@@ -832,6 +796,7 @@ Process Enfermera[id: 0..2] {
 
 ##### b)
 ```
+//No chequeado
 sem llegueP[3] = {0,0,0}; //Llego un pasajero al puesto x
 sem retirarse[150] = {0 ... 0}; //Se hisopo al pasajero y se puede retirar
 
@@ -852,6 +817,7 @@ Process Pasajero[id: 0..149] {
     }
     P(mutexP[min]); //Saco turno para el puesto con menos turnos
     turnosP[min].push(id);
+    cant[min]++;
     P(mutexP[min]);
     V(llegueP[min]); //Aviso al puesto
 }
@@ -861,6 +827,7 @@ Process Enfermera[id: 0..2] {
         P(llegueP[id]); //Espera que llegue alguien
         P(mutexP[id]); //Toma al proximo pasajero
         idPasajero = turnosP[id].pop();
+        cant[id]--;
         V(mutexP[id]);
 
         Hisopar();

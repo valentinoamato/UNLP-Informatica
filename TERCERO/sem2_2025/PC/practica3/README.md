@@ -63,6 +63,7 @@ Process Persona[id: 1..N] {
 
 ##### b)
 ```
+//No hace falta la cola, ni el array de variables de condicion
 Monitor Fotocopiadora {
     cond personas[N]
     cola turnos;
@@ -305,9 +306,10 @@ Monitor Corralon {
         //Si hay alguien esperando lo despierto
         if (!turnos.isEmpty()) {
             next = turnos.pop();
-            signal(personas[next];
+            signal(personas[next]);
+        } else {
+            libre = true;
         }
-        libre = true;
     }
 }
 
@@ -365,4 +367,60 @@ Process Persona[id: 0..N-1] {
 ##### c)
 ```
 Requerimiento resuelto en el inciso B).
+```
+
+### 6)
+```
+Monitor JTP {
+    //Para avisarle a un grupo que su nota esta lista
+    cond grupos[0..24];
+    cond esperar;
+    int llegaron[0..24] = {0,0,...,0};
+    int terminaron[0..24] = {0,0,...,0};
+    int notas[0..24] = {0,0,...,0};
+    int cant = 0; //Cantidad de alumnos que llegaron
+
+    Procedure llegue(grupo: out) {
+        //Esperar a que lleguen todos
+        cant++;
+        if (cant == 50) {
+            signalAll(esperar);
+            cant = 25;
+        } else {
+            wait(esperar);
+        }
+
+        //Asignar los grupos
+        grupo = AsignarNroGrupo();
+        //Asignar un numero hasta que haya uno valido
+        while (llegaron[grupo] == 2) {
+            grupo = AsignarNroGrupo();
+        }
+        llegaron[grupo]++;
+    }
+
+    Procedure corregir(grupo: in, nota: out) {
+        terminaron[grupo]++;
+        //Si termino mi grupo
+        if (terminaron[grupo] == 2) {
+            nota = cant; //Guardo la nota del alumno
+            notas[grupo] = cant;
+            //Despierto al otro alumno
+            signal(grupos[grupo]);
+            cant--; //Nota del proximo grupo
+        } else {
+        //Si mi grupo no termino espero
+            await(grupos(grupo));
+            nota = notas[grupo];
+        }
+    }
+}
+
+Process Alumno[id: 0..49] {
+    int nota, grupo;
+    JTP.llegue(grupo);
+    //Hacer la tarea
+    JTP.corregir(grupo,nota);
+}
+
 ```

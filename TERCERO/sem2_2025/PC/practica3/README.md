@@ -595,6 +595,7 @@ Monitor Evaluacion {
             signalAll(entrega); //Les aviso que ya tienen el enunciado
         } else {
             await(llegada); //Espero a que lleguen todos
+            signalAll(entrega); //Les aviso que ya tienen el enunciado
         }
     }
 
@@ -649,7 +650,7 @@ Process Profesora[id: 0] {
         Examen e;
         int nota;
         Evaluacion.corregir(examen); //Recibe un examen de un alumno
-        nota = corregirExamen(nota); //Lo corrige
+        nota = corregirExamen(examen); //Lo corrige
         Evaluacion.entregarNota(nota); //Entrega la nota
     }
 }

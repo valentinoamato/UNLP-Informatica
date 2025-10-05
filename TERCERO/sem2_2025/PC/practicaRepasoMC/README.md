@@ -150,6 +150,48 @@ Process Persona[id: 0..U-1] {
 ```
 
 ## Monitores
+### 1)
+```
+Monitor Maquina {
+    cond llegada; //Para avisar que llego una persona
+    cond fin; //Para avisar que se termino de votar
+    cond prox[N]; //Para avisar que pase el proximo
+    colaPrioridad turnos;
+    int esperando = 0; //Cantidad de gente esperando
+
+    Procedure llegue(id: in, edad: in, embarazada: in) { //La persona llega, saca turno y espera
+        turnos.push(id, edad, embarazada); //Saco un turno con prioridad
+        esperando++;
+        signal(llegada); //Aviso a la autoridad que llegue
+        await(prox[id]); //Espero que sea mi turno
+        esperando--;
+    }
+
+    Procedure proximo() {
+        if (esperando == 0) { //Si no hay gente esperando, espero
+            await(llegada);
+        }
+        signal(prox[turnos.pop()]); //Aviso al proximo que es su turno
+        await(fin); //Espero a que termine
+    }
+
+    Procedure termine() {
+        signal(fin); //Aviso que termine
+    }
+}
+
+Process Autoridad[id: 0] {
+    for int i in 1..N {
+        Maquina.proximo();
+    }
+}
+
+Process Persona[id: 0..N-1] {
+    Maquina.llegue(id, edad, embarazada);
+    Votar();
+    Maquina.termine();
+}
+```
 ### 2)
 ```
 Monitor Grupo[id: 0..4] {
@@ -187,5 +229,38 @@ Process Vendedor[id: 0..19] {
     Grupo[equipo-1].llegue();
     //Realizar ventas
     Grupo[equipo-1].termine(misVentas, ventasTotales);
+}
+```
+
+### 3
+```
+Monitor Pasaje {
+    cond esperar; //Espero a que me toque
+    bool libre = true; //El pasaje esta libre
+    int esperando = 0; //Cantidad de personas esperando
+
+    Procedure llegue() { //Una persona llega al pasaje y espera (o no) su turno
+        if (libre) {
+            libre = false;
+        } else {
+            esperando++;
+            await(esperar);
+            esperando--;
+        }
+    }
+
+    Procedure termine() { //Una persona termino de pasar
+        if (esperando == 0) {
+            libre = true;
+        } else {
+            signal(esperar);
+        }
+    }
+}
+
+Process Persona[id: 0..29] {
+    Pasaje.llegue();
+    //Uso el paso
+    Pasaje.termine()
 }
 ```

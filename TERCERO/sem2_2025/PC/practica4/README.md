@@ -1,4 +1,7 @@
+## PMA
+
 ### 1)
+CASI TODO PMA ESTA MAL HECHO
 #### a)
 ```cpp
 chan Solicitudes((int, tipoSolicitud));
@@ -429,6 +432,138 @@ Process Impresora[id: 0..2] {
         }
 
         imprimir(trabajo); //Imprimir el trabajo
+    }
+}
+```
+
+## PMS
+### 1) 
+#### b)
+```cpp
+Process Robot[id: 0..R-1] {
+    while (true) {
+        dir = buscarSitio();
+        Analizador!sitio(dir);
+    }
+}
+
+Process Analizador[id: 0] {
+    while (true) {
+        Robot[*]?sitio(dir);
+        analizarSitio(dir);
+    }
+}
+```
+
+#### c)
+```cpp
+Process Robot[id: 0..R-1] {
+    while (true) {
+        dir = buscarSitio();
+        Buffer!sitio(dir);
+    }
+}
+
+Process Buffer[id: 0] {
+    colaDir cola;
+    do
+        if Robot[*]?sitio(dir) -> cola.push(dir);
+        ☐ (!cola.isEmpty()); Analizador?prox(_) -> Analizador!Sitio(cola.pop());
+        fi
+    od
+}
+
+Process Analizador[id: 0] {
+    while (true) {
+        Buffer!prox(_);
+        Buffer?sitio(dir);
+        analizarSitio(dir);
+    }
+}
+```
+
+### 2)
+```cpp
+Process Uno[id: 0] {
+    while (true) {
+        m = prepararMuestra();
+        Buffer!muestra(m);
+    }
+}
+
+Process Buffer[id: 0] {
+    colaDir cola;
+    do Uno?muestra(m) -> cola.push(m);
+        ☐ (!cola.isEmpty()); Dos?prox(_) -> Dos!muestra(cola.pop());
+    od
+}
+
+Process Dos[id: 0] {
+    while (true) {
+        Buffer!prox(_);
+        Buffer?muestra(m);
+        s = armarSet(m);
+        Tres!set(s);
+        Tres?resultado(r);
+        archivar(r);
+    }
+}
+
+Process Tres[id:0] {
+    while (true) {
+        Dos?set(s);
+        r = realizarAnalisis(s);
+        Dos!resultado(r);
+    }
+}
+```
+
+### 3)
+```cpp
+Process Barrera[id: 0] {
+    for int i in 1..N {
+        Alumno[*]?llegue(_);
+    }
+
+    for int i in 0..N-1 {
+        Alumno[i]!continuar(_);
+    }
+}
+
+Process Alumno[id: 0..N-1] {
+    Barrera!llegue(_);
+    Barrera?continuar(_);
+
+    e = resolverExamen();
+    Buffer!examen(id, e);
+    r = Profesor[*]?resultado(r);
+}
+
+Process Buffer[id: 0] {
+    cola cola;
+    cantE = N; //Examenes por entregar
+    cantE2 = A; //Examenes por recibir
+    cantP = 0; //Profesores que terminaron
+    do (cantE2 >=1); Alumno[*]?examen(id, e) -> cola.push(id, e);
+        ☐ (!cola.isEmpty() && cantE >= 1); Profesor[*]?prox(id) -> {
+            cantE--;
+            Profesor[id]!examen(cola.pop());
+        }
+        ☐ (cantE < 1 && cantP < P); Profesor[*]?prox(id) -> {
+            cantP++;
+            Profesor[id]!examen(-1, NULL);
+        }
+    od
+}
+
+Process Profesor[id: 0..P-1] {
+    Buffer!prox(id);
+    Buffer?examen(alumno, e);
+    while (e != NULL) {
+        r = corregirExamen(e);
+        Alumno[alumno]!resultado(r);
+        Buffer!prox(id);
+        Buffer?examen(alumno, e);
     }
 }
 ```

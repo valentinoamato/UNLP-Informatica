@@ -1,0 +1,40 @@
+@startuml
+skinparam classAttributeIconSize 0
+class Pedido {
+    + create(cliente : Cliente, productos : Producto[*], formaPago : FormaPago) : Pedido
+    + getCostoTotal() : Real
+}
+
+class Cliente {
+    + fechaAlta : Date
+    + getFechaAlta() : Date
+}
+
+class Producto {
+    + precio : Real
+    + getPrecio() : Real
+}
+
+abstract class FormaPago {
+- extra: Real
++getExtra() : Real
++setExtra(extra: Real)
+}
+
+class Efectivo {
++<<create>>Efectivo(): Efectivo
+}
+class SeisCuotas {
++<<create>>SeisCuotas(): SeisCuotas
+}
+class DoceCuotas {
++<<create>>DoceCuotas(): DoceCuotas
+}
+
+Pedido --> "1" Cliente : cliente
+Pedido --> "1" FormaPago
+Pedido *--> "0..*" Producto : productos
+FormaPago <|-- Efectivo
+FormaPago <|-- SeisCuotas
+FormaPago <|-- DoceCuotas
+@enduml

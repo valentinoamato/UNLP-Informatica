@@ -519,6 +519,7 @@ Process Tres[id:0] {
 ```
 
 ### 3)
+#### c)
 ```cpp
 Process Barrera[id: 0] {
     for int i in 1..N {
@@ -531,25 +532,32 @@ Process Barrera[id: 0] {
 }
 
 Process Alumno[id: 0..N-1] {
-    Barrera!llegue(_);
-    Barrera?continuar(_);
+    Barrera!llegue(_); //Avisa que llego
+    Barrera?continuar(_); //Espera que lleguen todos
 
     e = resolverExamen();
-    Buffer!examen(id, e);
-    r = Profesor[*]?resultado(r);
+    Buffer!examen(id, e); //Envia el examen resuelto
+    r = Profesor[*]?resultado(r); //Espera el resultado
 }
 
 Process Buffer[id: 0] {
     cola cola;
-    cantE = N; //Examenes por entregar
-    cantE2 = A; //Examenes por recibir
-    cantP = 0; //Profesores que terminaron
-    do (cantE2 >=1); Alumno[*]?examen(id, e) -> cola.push(id, e);
-        ☐ (!cola.isEmpty() && cantE >= 1); Profesor[*]?prox(id) -> {
-            cantE--;
+
+    //Examenes entregados
+    cantE = 0; //Cuando no hay mas, termina el profesor
+
+    //Profesores que terminaron
+    cantP = 0; //Cuando terminaron todos, termina el buffer
+
+    do (cantP < P); Alumno[*]?examen(id, e) -> cola.push(id, e); //Recibir examen (si no termino)
+
+        //Entregar examen
+        ☐ (!cola.isEmpty()); Profesor[*]?prox(id) -> {
+            cantE++;
             Profesor[id]!examen(cola.pop());
         }
-        ☐ (cantE < 1 && cantP < P); Profesor[*]?prox(id) -> {
+        //Avisar al profe que termine
+        ☐ ((cantE == N) && (cantP < P)); Profesor[*]?prox(id) -> {
             cantP++;
             Profesor[id]!examen(-1, NULL);
         }
@@ -564,6 +572,113 @@ Process Profesor[id: 0..P-1] {
         Alumno[alumno]!resultado(r);
         Buffer!prox(id);
         Buffer?examen(alumno, e);
+    }
+}
+```
+
+### 4)
+#### a)
+```cpp
+Process Persona[id: 0..P] {
+    Empleado!llegue(id);
+    Empleado!turno(_);
+
+    // USAR SIMULADOR
+
+    Empleado!termine();
+}
+
+Process Empleado[id: 0] {
+    int p;
+
+    for int i in 1..P {
+        Persona[*]?llegue(p); //Espero que llegue alguien
+        Persona[p]!turno(_); //Le doy el turno
+        Persona[p]?termine(); //Espero a que termine
+    }
+}
+```
+
+#### b)
+```cpp
+Process Persona[id: 0..P] {
+    Empleado!llegue(id);
+    Empleado!turno(_);
+
+    // USAR SIMULADOR
+
+    Empleado!termine(_);
+}
+
+Process Empleado[id: 0] {
+    for int i in 1..P {
+        Persona[i]?llegue(_); //Espero que llegue la persona i
+        Persona[i]!turno(_); //Le doy el turno
+        Persona[i]?termine(_); //Espero a que termine
+    }
+}
+```
+
+#### c)
+```cpp
+Process Persona[id: 0..P] {
+    Buffer!llegue(id); //Saco turno
+    Empleado!turno(_); //Espero mi turno
+
+    // USAR SIMULADOR
+
+    Empleado!termine(_); //Aviso que termine
+}
+
+Process Buffer[id: 0] {
+    cola turnos;
+    int p;
+
+    do Persona?llegue(p) -> turnos.push(p);
+        ☐ (!turnos.isEmpty()); Empleado?prox(_) -> Empleado!persona(turnos.pop());
+    od
+}
+
+Process Empleado[id: 0] {
+    int p;
+
+    for int i in 1..P {
+        Buffer!prox(_); //Pido el id de la proxima persona
+        Buffer?persona(p); //Espero dicho id
+        Persona[p]!turno(_); //Le doy el turno
+        Persona[p]?termine(_); //Espero a que termine
+    }
+}
+```
+
+### 5)
+```cpp
+Process Espectador[id: 0..E] {
+    Buffer!llegue(id); //Saco turno
+    Coordinador!turno(_); //Espero mi turno
+
+    // Usar expendedora
+
+    Coordinador!termine(_); //Aviso que termine
+}
+
+Process Buffer[id: 0] {
+    cola turnos;
+    int e;
+
+    do Espectador?llegue(e) -> turnos.push(e);
+        ☐ (!turnos.isEmpty()); Coordinador?prox(_) -> Coordinador!espectador(turnos.pop());
+    od
+}
+
+Process Coordinador[id: 0] {
+    int e;
+
+    for int i in 1..E {
+        Buffer!prox(_); //Pido el id del proximo espectador
+        Buffer?espectador(p); //Espero dicho id
+        Espectador[p]!turno(_); //Le doy el turno
+        Espectador[p]?termine(_); //Espero a que termine
     }
 }
 ```

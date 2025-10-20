@@ -537,7 +537,7 @@ Process Alumno[id: 0..N-1] {
 
     e = resolverExamen();
     Buffer!examen(id, e); //Envia el examen resuelto
-    r = Profesor[*]?resultado(r); //Espera el resultado
+    Profesor[*]?resultado(r); //Espera el resultado
 }
 
 Process Buffer[id: 0] {
@@ -581,7 +581,7 @@ Process Profesor[id: 0..P-1] {
 ```cpp
 Process Persona[id: 0..P] {
     Empleado!llegue(id);
-    Empleado!turno(_);
+    Empleado?turno(_);
 
     // USAR SIMULADOR
 
@@ -602,8 +602,7 @@ Process Empleado[id: 0] {
 #### b)
 ```cpp
 Process Persona[id: 0..P] {
-    Empleado!llegue(id);
-    Empleado!turno(_);
+    Empleado?turno(_);
 
     // USAR SIMULADOR
 
@@ -612,7 +611,6 @@ Process Persona[id: 0..P] {
 
 Process Empleado[id: 0] {
     for int i in 1..P {
-        Persona[i]?llegue(_); //Espero que llegue la persona i
         Persona[i]!turno(_); //Le doy el turno
         Persona[i]?termine(_); //Espero a que termine
     }

@@ -4,7 +4,7 @@ use Ada.Text_IO;
 with Ada.Numerics.Discrete_Random;
 
 procedure Ej1b is
-    cant: Integer := 10000;
+    cant: Integer := 5;
 
     task Control is
         entry Auto;
@@ -41,7 +41,7 @@ procedure Ej1b is
     vehiculos: array(1..cant) of vehiculo;
 
     task body Control is
-        Peso, P : Integer := 0;
+        Peso : Integer := 0;
     begin
         loop
             select
@@ -54,9 +54,8 @@ procedure Ej1b is
                 or when(peso < 3) => accept Camion;
                     peso:=peso+3;
 
-                or accept Salida(P: IN integer) do
-                    Peso := Peso - P;
-                end salida;
+                or accept Salida(P: IN integer);
+                    Put_Line("P:" & Integer'Image(P));
             end select;
 
         Put_Line("Peso actual:" & Integer'Image(Peso));

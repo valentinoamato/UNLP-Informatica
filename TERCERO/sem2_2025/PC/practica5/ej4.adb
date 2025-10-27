@@ -34,7 +34,7 @@ procedure ej4 is
             or
                 when(C > 0) => accept Tomar(N: OUT Integer) do
                     N:= Notas(J); -- Dejar la nota
-                    I:=I+1;
+                    J:=J+1;
                     C:=C-1;
                     Put_Line("Nota Tomada");
                 end Tomar;

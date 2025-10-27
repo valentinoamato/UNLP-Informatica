@@ -79,7 +79,7 @@ procedure ej3 is
             or delay 2.0;
                 null;
             end select;
-            delay 1.0;
+            delay 2.0;
         end loop;
     end Proceso1;
 
@@ -87,15 +87,17 @@ procedure ej3 is
     task body Proceso2 is
         S: Integer;
     begin
+
+        S := RandomInt;
         loop
-            S := RandomInt;
             select
                 Central.Signal2(S); -- Enviar inmediatamente
+                S := RandomInt;
             else
+                null;
                 delay 1.0; -- Sino esperar y reintentar
-                Central.Signal2(S);
             end select;
-            delay 1.0;
+            delay 1.0; -- Anti Spam
         end loop;
     end Proceso2;
 

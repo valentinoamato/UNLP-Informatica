@@ -3,98 +3,139 @@ use Ada.Text_IO;
 
 with Ada.Numerics.Discrete_Random;
 
+procedure Ej5 is
+    type Int5 is array (1..5) of Integer;
+
 function RandomInt return Integer is
     package Random_Int is new Ada.Numerics.Discrete_Random(Integer);
     Gen  : Random_Int.Generator;
     Dato : Integer;
 begin
     Random_Int.Reset(Gen);
-    return Random_Int.Random(Gen) mod 1000;
+    return Random_Int.Random(Gen) mod 10;
 end RandomInt;
 
-procedure Ej5 is
-    cant: Integer := 20;
+procedure RandomDelay is
+begin
+    delay Duration(RandomInt) / 3.0;
+end RandomDelay;
+
+function GetGrupo(Id: Integer) return Integer is
+begin
+    return ((Id - 1) mod 5) + 1;
+end GetGrupo;
+
+function GetMax(Montos: Int5) return Integer is
+    Max: Integer := -10;
+    IdMax: Integer:= 0;
+begin
+    for I in 1..5 loop
+        if Montos(I) > Max then
+            Max:=Montos(I);
+            IdMax:=I;
+        end if;
+    end loop;
+
+    return IdMax;
+end GetMax;
+
+    task type Persona is
+        entry SetId(Id: IN Integer; Equipo: IN Integer);
+        entry Barrera;
+        entry GrupoMax(M: IN Integer);
+    end Persona;
+
+
+    Personas: array(1..20) of Persona;
 
     task Coordinador is
-        entry Llegue(Equipo: OUT Integer);
-        entry SumarMonto(M: IN Integer, Equipo: IN Integer);
+        entry Llegue(Equipo: IN Integer);
+        entry SumarMonto(M: IN Integer; Equipo: IN Integer);
     end Coordinador;
     task body Coordinador is
-        cant: array(1..5) of Integer; --Cant integrantes
-        montos: array(1..5) of Integer; --Monto de cada equipo
+        cant: Int5:= (0,0,0,0,0); --Cant integrantes
+        montos: Int5:=(0,0,0,0,0); --Monto de cada equipo
         aux: Integer;
     begin
+        -- Barrera
         for I in 1..20 loop
-            Persona(I).SetId(I, I mod 4);
-        end loop;
-
-        for I in 1..20 loop
-            accept GetId(Id: OUT Integer; Equipo: OUT Integer) do
-                Id:=I;
-                Equipo:=I mod 4;
-                aux:=equipo;
+            accept Llegue(Equipo: IN Integer) do
+                Put(Integer'Image(Equipo) & " ");
+                aux:=Equipo;
                 cant(Equipo):=cant(Equipo)+1;
-            end GetId;
+            end Llegue;
+
+            -- Si llegaron todos
             if Cant(aux) = 4 then
-                for J in 1..4 do
-                    Persona(aux * J).Barrera;
+                Put_Line("");
+                Put_Line("Equipo " & Integer'Image(aux) & "listo.");
+
+                -- Despertar a todos (EJ. 1,6,11,16)
+                for J in 0..3 loop
+                    Personas(aux + (J * 5)).Barrera;
+                    Put_Line("Despertate " & Integer'Image(aux + (J * 5)));
                 end loop;
             end if;
         end loop;
 
+        -- Actualizar los montos
         for I in 1..20 loop
             accept SumarMonto(M: IN Integer; Equipo: IN Integer) do
                 montos(Equipo):=montos(Equipo)+M;
-            end GetId;
+            end SumarMonto;
         end loop;
 
-        if montos(1)>montos(2) and montos(1) > montos(3) and montos(1) > montos(4) then
-            aux:=1;
+        -- Calcular el maximo
+        aux:=GetMax(Montos);
 
-        if montos(2)>montos(1) and montos(2) > montos(3) and montos(2) > montos(4) then
-            aux:=2;
+        for I in 1..5 loop
+            Put_Line("El equipo " & Integer'Image(I) & " junto " & Integer'Image(montos(I)));
+        end loop;
 
-        if montos(3)>montos(1) and montos(3) > montos(2) and montos(3) > montos(4) then
-            aux:=3;
-        else
-            aux:=4;
-        end if
-
+        -- Informar a todos quien junto mas
         for I in 1..20 loop
-            Persona(I).GrupoMax(aux);
+            Personas(I).GrupoMax(aux);
         end loop;
 
     end Coordinador;
 
-    task type Persona is
-        entry SetId(Id: OUT Integer; Equipo: OUT Integer);
-        entry Barrera;
-        entry GrupoMax(M: IN Integer);
-    end Persona;
     task body Persona is
+        Monto: Integer:=0;
+        Id: Integer;
+        Equipo: Integer;
     begin
-        Random_Int.Reset(Gen);
-        Dato := (Random_Int.Random(Gen) mod 3) + 1;
-        Put_Line("Persona tipo" & Integer'Image(Dato) & " pasando.");
-        case Dato is
-            when 1 =>
-                Control.auto;
-            when 2 =>
-                Control.camioneta;
-            when 3 =>
-                Control.camion;
-            when others =>
-                null;
-        end case;
+        -- Recibir Id y Codigo de equipo
+        accept SetId(Id: IN Integer; Equipo: IN Integer) do
+            Persona.Id:=Id;
+            Persona.Equipo:=Equipo;
+        end SetId;
 
-        delay 1.0;
+        RandomDelay;
 
-        Control.salida(Dato);
+        -- Aviso que llegue
+        Coordinador.llegue(Equipo);
+
+        -- Esperar a que este mi equipo
+        accept Barrera;
+
+        -- Juntar monedas
+        for I in 1..15 loop
+            Monto:=Monto+RandomInt;
+        end loop;
+
+        -- Informar Monto
+        Coordinador.SumarMonto(Monto, Equipo);
+
+        -- Obtener el ganador
+        accept GrupoMax(M: IN Integer) do
+            Put_Line("Gano el equipo "& Integer'Image(M));
+        end GrupoMax;
     end Persona;
 
-    Personas: array(1..cant) of vehiculo;
 
 begin
-    null;
+    for I in 1..20 loop
+        Personas(I).SetId(I, GetGrupo(I));
+    end loop;
 end Ej5;
 

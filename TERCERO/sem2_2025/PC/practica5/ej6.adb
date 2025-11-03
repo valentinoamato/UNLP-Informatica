@@ -5,7 +5,7 @@ with Ada.Numerics.Discrete_Random;
 
 procedure Ej6 is
     len: Integer := 100000; -- Debe ser multiplo de 10
-    type NumsT is array (1..len) of Integer;
+    type NumsT is array (1..(len/10)) of Integer;
 
 task type Worker is
     entry Iniciar;
@@ -34,7 +34,7 @@ end RandomDelay;
 function GetNums return NumsT is
     Nums: NumsT;
 begin
-    for i in 1..len loop
+    for i in 1..(len / 10) loop
         Nums(i):=RandomInt;
     end loop;
     return Nums;

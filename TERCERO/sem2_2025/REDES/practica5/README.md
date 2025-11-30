@@ -77,7 +77,16 @@ Caracteristicas:
 - Es un numero de 32 bits.
 - Se elige de manera pseudoaleatoria para mejorar la seguridad.
 - Aumenta con el tiempo, en general cada 4ms.
-- El numero de secuencia aumenta en cada envio segun cuantos bytes se enviaron.
+
+El numero de secuencia de un segmento enviado es igual al numero de secuencia del anterior segmento enviado, mas los bytes que se enviaron en ese segmento, mas 1 si el segmento tenia la flag SYN y mas 1 se tenia la flag FIN.
+
+El numero ack es el numero de secuencia del ultimo segmento recibido, mas los bytes recibidos, mas uno si dicho paquete tenia SYN y mas uno si tenia FIN.
+```
+SEQ(nuevo) = SEQ(anterior) + bytes_enviados(anterior) + (1 si tenia SYN) + (1 si tenia FIN)
+```
+```
+ACK = SEQ_último_segmento_recibido + bytes_recibidos + (1 si incluía SYN) + (1 si incluía FIN)
+```
 
 Ayuda a identificar, controlar el origen y mantener el orden de los segmentos de datos transmitidos entre el cliente y el servidor.
 #### 8. Investigue qué es el MSS. ¿Cuándo y cómo se negocia?

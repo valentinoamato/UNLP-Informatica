@@ -256,6 +256,8 @@ Se utiliza para:
 | ---------------- | ----- | ------ | -------------------------- |
 | **Echo Request** | **8** | **0**  | Mensaje enviado por *ping* |
 | **Echo Reply** | **0** | **0**  | Respuesta del destino |
+| **Destination Unreachable** | **3** | **0**  | Red inalcanzable |
+| **Time Exceeded** | **11** | **0**  | TTL excedido en transito |
 #### b. Analice cómo funcionan comandos como traceroute/tracert de Linux/Windows y cómo manipulan el campo TTL de los paquetes IP.
 `traceroute` permite ver cada router intermedio entre origen y destino.
 

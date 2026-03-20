@@ -366,6 +366,8 @@ Si, STMP permite transmitir multiples mensajes sobre la misma conexion TCP.
 `MTA` (Mail Transfer Agent): Es el agente que transfiere correo estre servidores. Se encarga de enrutar el correo hacia el dominio destino consultado el DNS. Usa `SMTP` en el puerto 25.
 
 `MDA` (Mail Delivery Agent): Se encarga de entregar el correo en el buzon del usuario dentro del servidor de correo. Recibe los mensajes del `MTA` y los deposita en el almacenamiento local del usuario.
+
+![2](./2.png)
 ##### Considere:
 ##### - Destinatarios múltiples del mismo dominio entre MUA-MSA y entre MTA-MTA
 `MUA-MSA` (cliente -> servidor de envio): El cliente abre una conexion TCP y puede enviar varios mensajes secuencialmente usando la secuencia SMTP (MAIL FROM / RCPT TO / DATA / ... /QUIT).

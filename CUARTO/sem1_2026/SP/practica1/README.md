@@ -175,6 +175,7 @@ En vez de acumular directamente sobre la posicion c[i,j] de la matriz resultado 
 El algoritmo divide las matrices en bloques de tamaño 
 BS×BS
 BS×BS y realiza la multiplicación bloque a bloque. Para cada bloque de la matriz resultado, acumula productos de bloques correspondientes de las matrices de entrada. Esta técnica mejora la localidad espacial y temporal de los datos, optimizando el uso de caché y aumentando el rendimiento respecto al método tradicional.
+Al realizar la multiplicacion TODO
 
 | 1024-16 | 1024-32 |1024-64 | 2048-16 |2048-32 | 2048-64 |
 |--|--|--|--|--|--|
@@ -198,3 +199,12 @@ Al correr el codigo de matrices.c con todas las modificaciones realizadas, y com
 | 256 | 0.03s |
 | 512 | 0.23s |
 | 1024 | 2.6s |
+
+## 10
+Como la matriz a tiene su ultima columna compuesta de 1s y el resto de la matriz por 0s, para cada elemento de la matriz resultado realizo una sola multiplicacion entre el ultimo elemento de la fila correspondiente de a, y el ultimo elemento de la columna correspondiente de b:
+| n | t  | t optimizado |
+| -- | -- | -- |
+| 128 | 0.0043s | 0.000029s |
+| 256 | 0.026s | 0.00027s |
+| 512 | 0.2s | 0.0013s |
+| 1024 | 1.75s | 0.011s |

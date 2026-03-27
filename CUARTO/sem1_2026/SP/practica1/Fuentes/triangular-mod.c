@@ -61,9 +61,10 @@ int main(int argc,char* argv[]){
 
  for(i=0;i<N;i++){
   for(j=0;j<N;j++){
-   for(k=0;k<N;k++){
-    C[i*N+j]=C[i*N+j] + A[i*N+k]*BT[k+j*N];
-   }
+    //El valor de la fila i, columna j de la matriz c
+    //Es la multiplicacion de el ultimo valor de la fila i de a
+    //Por el ultimo valor de la columna j de la matriz b
+    C[i*N+j]=C[i*N+j] + A[i*N + N-1]*BT[j*N + N-1];
   }
  }
 

@@ -6,11 +6,11 @@
 double dwalltime();
 
 // Tamaño de lado de las matrices
-#define N 4096
+#define N 4
 //Threads
-#define T 8
+#define T 1
 //Block Size
-#define BS 64
+#define BS 1
 
 //Variables compartidas
 double *a, *b, *c, *bt;
@@ -44,6 +44,11 @@ int main(int argc, char *argv[]) {
 
     if ((N % BS) != 0) {
         fprintf(stderr, "No: BS must be multiple of T.");
+        exit(1);
+    }
+
+    if ((((N / BS)) % T) != 0) {
+        fprintf(stderr, "No: N/BS must be multiple of T.");
         exit(1);
     }
     double  acum, timetick, prom;
@@ -120,10 +125,6 @@ void* mul(void *arg) {
     double acum;
 
     // Carga de Bt
-    if (id == 0) { // Evitar division por 0 (start = 0)
-        bt[0] = b[0];
-        start++;
-    }
     for (l = start; l < end; l++) {
         j = l % N;
         i = l / N;
@@ -167,7 +168,7 @@ void matrix_mul(int start, int end)
             i_n_j = i_n + j;
             for (k = 0; k < N; k += BS)
             {
-                block_mul(&a[i_n + k], &b[j_n + k], &c[i_n_j]);
+                block_mul(&a[i_n + k], &bt[j_n + k], &c[i_n_j]);
             }
         }
     }

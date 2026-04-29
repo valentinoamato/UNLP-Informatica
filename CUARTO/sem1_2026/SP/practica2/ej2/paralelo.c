@@ -111,10 +111,6 @@ void* mul(void *arg) {
     double acum;
 
     // Carga de Bt
-    if (id == 0) { // Evitar division por 0 (start = 0)
-        bt[0] = b[0];
-        start++;
-    }
     for (l = start; l < end; l++) {
         j = l % N;
         i = l / N;
@@ -125,13 +121,6 @@ void* mul(void *arg) {
     pthread_barrier_wait(&barrier);
 
     //Multiplicacion
-    if (id == 0) { // Evitar division por 0 (start = 0)
-        acum = 0.0;
-        for(k=0;k<N;k++){
-            acum+=a[k] * bt[k];
-        }
-        c[0] = acum;
-    }
     for (l = start; l < end; l++) {
         acum = 0.0;
         j = l % N;

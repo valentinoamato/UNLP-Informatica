@@ -26,3 +26,4 @@ Este repositorio contiene resoluciones de trabajos practicos de la carrera Licen
  * [Cuarto](https://github.com/valentinoamato/UNLP-Informatica/tree/main/CUARTO)
    * [Primer semestre](https://github.com/valentinoamato/UNLP-Informatica/tree/main/CUARTO/sem1_2026)
      * [Sistemas Paralelos](https://github.com/valentinoamato/UNLP-Informatica/tree/main/CUARTO/sem1_2026/SP)
+     * [Sistemas Operativos](https://github.com/valentinoamato/UNLP-Informatica/tree/main/CUARTO/sem1_2026/SO)

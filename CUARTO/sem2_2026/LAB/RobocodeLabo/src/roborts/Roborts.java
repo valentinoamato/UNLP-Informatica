@@ -1,32 +1,28 @@
 package roborts;
 import robocode.*;
-import roborts.CombatStrategy;
-import roborts.FastStrategy;
-import roborts.SlowStrategy;
-
 
 
 public class Roborts extends JuniorRobot
 {
-    private CombatStrategy combatStrategy = new SlowStrategy();
+    private CombatStrategy combatStrategy = new ElusiveStrategy();
 
-    @Override    
+    @Override
     public void run() {
-        combatStrategy.run();
+        combatStrategy.run(this);
     }
 
     @Override
     public void onScannedRobot() {
-        combatStrategy.onScannedRobot();
+        combatStrategy.onScannedRobot(this);
     }
 
     @Override
     public void onHitByBullet() {
-        combatStrategy.onHitByBullet();
+        combatStrategy.onHitByBullet(this);
     }
 
     @Override
     public void onHitWall() {
-        combatStrategy.onHitWall();
+        combatStrategy.onHitWall(this);
     }
 }

@@ -1,13 +1,13 @@
 package roborts;
 import robocode.*;
 
-public sealed interface CombatStrategy permits SlowStrategy, FastStrategy {
+public sealed interface CombatStrategy permits VariablePowerStrategy, ElusiveStrategy {
 
-    public void run();
+    public void run(Roborts robot);
 
-    public void onScannedRobot();
+    public void onScannedRobot(Roborts robot);
 
-    public void onHitByBullet();
+    public void onHitByBullet(Roborts robot);
 
-    public void onHitWall();
+    public void onHitWall(Roborts robot);
 }

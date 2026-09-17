@@ -6,15 +6,12 @@ public final class ElusiveStrategy implements CombatStrategy {
 
     @Override
     public void run(Roborts robot) {
-        robot.setColors(robot.black, robot.black, robot.black, robot.blue, robot.black);
-        while (true) {
-            if (clockwise) {
-                robot.turnGunRight(360);
-                robot.turnAheadRight(200, 180);
-            } else {
-                robot.turnGunLeft(360);
-                robot.turnBackRight(200, 180);
-            }
+        if (clockwise) {
+            robot.turnGunRight(360);
+            robot.turnAheadRight(200, 180);
+        } else {
+            robot.turnGunLeft(360);
+            robot.turnBackRight(200, 180);
         }
     }
 

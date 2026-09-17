@@ -5,11 +5,8 @@ public final class VariablePowerStrategy implements CombatStrategy {
 
     @Override
     public void run(Roborts robot) {
-        robot.setColors(robot.white, robot.white, robot.white, robot.white, robot.white);
-        while (true) {
-            robot.turnGunRight(360);
-            robot.turnGunLeft(360);
-        }
+        robot.turnGunRight(360);
+        robot.turnGunLeft(360);
     }
 
     @Override

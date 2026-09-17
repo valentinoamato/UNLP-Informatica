@@ -1,7 +1,7 @@
 package roborts;
 import robocode.*;
 
-public sealed interface CombatStrategy permits VariablePowerStrategy, ElusiveStrategy {
+public sealed interface CombatStrategy permits VariablePowerStrategy, ElusiveStrategy, LowEnergyStrategy {
 
     public void run(Roborts robot);
 

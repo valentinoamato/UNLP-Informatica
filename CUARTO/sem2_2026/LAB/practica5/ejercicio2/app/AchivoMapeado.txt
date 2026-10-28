@@ -1,0 +1,9 @@
+<nombreClase>org.example.Mapeado</nombreClase>
+<nombreAtributo>valor</nombreAtributo>
+<nombreValor>Default1</nombrenombreValor>
+<nombreAtributo>valor2</nombreAtributo>
+<nombreValor>20</nombrenombreValor>
+<nombreAtributo>valor3</nombreAtributo>
+<nombreValor>30.2</nombrenombreValor>
+<nombreAtributo>valor4</nombreAtributo>
+<nombreValor>30.2</nombrenombreValor>
